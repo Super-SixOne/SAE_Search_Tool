@@ -1,0 +1,1 @@
+Tool zum durchsuchen von Dateien in einer gegebenen Menge von Verzeichnissen auf Basis von gleichem oder ähnlichem Text.
