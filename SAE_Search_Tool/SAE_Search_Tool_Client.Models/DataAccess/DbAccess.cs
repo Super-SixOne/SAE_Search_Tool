@@ -20,7 +20,6 @@ namespace SAE_Search_Tool_Client.Models.DataAccess
             SqlCommand cmd = new SqlCommand("Select * from Yoink", con);
             con.Open();
             SqlDataReader rdr = cmd.ExecuteReader();
-            public DataSet ds = new DataSet();
             con.Close();
         }      
     }
