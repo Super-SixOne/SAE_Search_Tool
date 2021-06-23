@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SAE_Search_Tool_Client.View
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SAE_Search_Tool_Client.Models", "SAE_Search_Tool_Client.Models\SAE_Search_Tool_Client.Models.csproj", "{E17DA08E-9919-494A-9ACB-591F6C207AA7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SAE_Search_Tool_Sync_Service", "SAE_Search_Tool_Sync_Service\SAE_Search_Tool_Sync_Service.csproj", "{E0EC3D6B-2B78-483D-93F5-B6889ABB068F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{E17DA08E-9919-494A-9ACB-591F6C207AA7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E17DA08E-9919-494A-9ACB-591F6C207AA7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E17DA08E-9919-494A-9ACB-591F6C207AA7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E0EC3D6B-2B78-483D-93F5-B6889ABB068F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E0EC3D6B-2B78-483D-93F5-B6889ABB068F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E0EC3D6B-2B78-483D-93F5-B6889ABB068F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E0EC3D6B-2B78-483D-93F5-B6889ABB068F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
