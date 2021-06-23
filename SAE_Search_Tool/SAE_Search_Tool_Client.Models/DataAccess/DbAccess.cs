@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace SAE_Search_Tool_Client.Models.DataAccess
 {
+    /// <summary>
+    /// Class that provides functionality to access a database.
+    /// </summary>
     class DbAccess
     {
     }
