@@ -13,8 +13,8 @@ namespace SAE_Search_Tool_Client.Models.BusinessLogic
     {
         #region Properties
 
-        string Path { get; set; }
-        string TextExcerpt { get; set; }
+        public string Path { get; set; }
+        public string TextExcerpt { get; set; }
 
         #endregion
     }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SAE_Search_Tool_Client.Models.BusinessLogic;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
