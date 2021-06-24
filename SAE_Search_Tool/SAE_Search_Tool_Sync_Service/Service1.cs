@@ -19,6 +19,7 @@ namespace SAE_Search_Tool_Sync_Service
 
         protected override void OnStart(string[] args)
         {
+            FileSync.Run();
         }
 
         protected override void OnStop()
