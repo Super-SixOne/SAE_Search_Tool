@@ -11,5 +11,7 @@ namespace SAE_Search_Tool_Sync_Service.Logic.Models
     /// </summary>
     class SearchPattern
     {
+        string Directory { get; set; }
+        List<string> Subfolders { get; set; }
     }
 }

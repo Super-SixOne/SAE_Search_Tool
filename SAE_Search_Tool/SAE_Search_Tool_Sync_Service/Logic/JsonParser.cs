@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using SAE_Search_Tool_Sync_Service.Logic.Models;
+using Newtonsoft.Json;
+using System.IO;
 
 namespace SAE_Search_Tool_Sync_Service.Logic
 {
@@ -12,5 +10,17 @@ namespace SAE_Search_Tool_Sync_Service.Logic
     /// </summary>
     class JsonParser
     {
+        public IList<SearchPattern> GetSearchPatterns()
+        {
+            string path = @"C:\Users\Dominik\Desktop\Projects\SAE_Search_Tool\Developement Testing\SyncConfig.json";
+            string json = string.Empty;
+
+            using (StreamReader reader = new StreamReader(path))
+            {
+                json = reader.ReadToEnd();
+            }
+
+            return JsonConvert.DeserializeObject<List<SearchPattern>>(json);
+        }
     }
 }

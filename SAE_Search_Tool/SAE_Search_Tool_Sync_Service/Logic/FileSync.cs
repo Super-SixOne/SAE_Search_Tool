@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SAE_Search_Tool_Sync_Service.Logic;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,7 +11,9 @@ namespace SAE_Search_Tool_Sync_Service
     {
         public static void Run()
         {
-            throw new NotImplementedException();
+            JsonParser parser = new JsonParser();
+
+            var res = parser.GetSearchPatterns();
         }
     }
 }
