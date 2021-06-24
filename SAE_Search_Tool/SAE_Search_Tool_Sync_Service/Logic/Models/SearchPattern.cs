@@ -1,8 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SAE_Search_Tool_Sync_Service.Logic.Models
 {
@@ -11,7 +8,10 @@ namespace SAE_Search_Tool_Sync_Service.Logic.Models
     /// </summary>
     class SearchPattern
     {
-        string Directory { get; set; }
+        [JsonProperty("drive")]
+        string Drive { get; set; }
+
+        [JsonProperty("subfolders")]
         List<string> Subfolders { get; set; }
     }
 }
