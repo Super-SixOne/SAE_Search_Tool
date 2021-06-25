@@ -13,7 +13,7 @@ namespace SAE_Search_Tool_Sync_Service.Logic.DataAccess
     class DbAccess
     {
         /// <summary>
-        /// Inserts data into the database if it does´nt already exist.
+        /// Inserts data into the database if it doesn´t already exist.
         /// </summary>
         /// <param name="fileReaderResults">The list of <see cref="FileReaderResult"/> objects to insert.</param>
         public void InsertData(IList<FileReaderResult> fileReaderResults)
