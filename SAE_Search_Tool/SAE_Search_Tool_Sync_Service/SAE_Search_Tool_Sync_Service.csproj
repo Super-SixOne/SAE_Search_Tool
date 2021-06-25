@@ -50,6 +50,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Logic\DataAccess\DbAccess.cs" />
     <Compile Include="Logic\FileReader.cs" />
     <Compile Include="Logic\FileSync.cs" />
     <Compile Include="Logic\JsonParser.cs" />
