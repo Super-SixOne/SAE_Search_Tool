@@ -1,0 +1,4 @@
+
+select *
+from public."SearchTable"
+where to_tsvector("Text") @@ to_tsquery('');
