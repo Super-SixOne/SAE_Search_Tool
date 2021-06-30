@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using System.IO;
 
 namespace SAE_Search_Tool_Client.Models.BusinessLogic
 {
@@ -23,26 +24,31 @@ namespace SAE_Search_Tool_Client.Models.BusinessLogic
     {
         //list
         //_List creation
-        
-       public List<data> _DriveList = new List<data>();
-       _Dr
-        
-        _DriveList.Add(new data()
+
+        List<Data> _DriveList = new List<Data>();
+        public void InitializeTestData()
         {
-            Drive = "C:",
-            SubFolders = @"DataSubfolder\Kacke\Dumm"
-        });
-           
+            _DriveList.Add(new Data()
+            {
+                Drive = "C:",
+                SubFolders = @"DataSubfolder\Kacke\Dumm"
+            });
+            string json = JsonConvert.SerializeObject(_DriveList);
+            File.WriteAllText(@"E:\Search Tool\SAE_Search_Tool\Developement Testing\DriveConfig.json", json);
+        }
 
-          
 
 
-        string json = JsonConvert.SerializeObject(_list.toArray());
+
+
+
+
+
 
     }
-    public class data
+    public class Data
     {
-     public string Drive { get; set; }
-     public string SubFolders { get; set; }
+        public string Drive { get; set; }
+        public string SubFolders { get; set; }
     }
 }
