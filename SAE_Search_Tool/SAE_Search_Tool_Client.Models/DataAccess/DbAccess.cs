@@ -18,7 +18,9 @@ namespace SAE_Search_Tool_Client.Models.DataAccess
         public bool IsConnected { get; private set; }
 
             string con = "data source=local;database=Sample; Integrated security=true"; // data source=. = local server
-            /// SqlDataReader rdr = cmd.ExecuteReader();
+        private object paramValue;
+
+        /// SqlDataReader rdr = cmd.ExecuteReader();
         void FindOneWordOnDb(object sender, EventArgs e)
         {
 
@@ -35,10 +37,10 @@ namespace SAE_Search_Tool_Client.Models.DataAccess
 
                 {
                     string sql = string.Format("select Id, Path, Text from TABLE " +
-                        "where to_tsvector(Text) @@ to_tsquery('@Text'); ", SearchString.Text);
+                        "where to_tsvector(Text) @@ to_tsquery('@Text'); ");
                     // Create the Command and Parameter objects.
-                    SqlCommand command = new SqlCommand(sql, connection);
-                    command.Parameters.AddWithValue("@pricePoint", paramValue);
+                    SqlCommand queryOne = new SqlCommand(sql, connection);
+                    command.Parameters.AddWithValue("@Text", paramValue);
 
                     // Open the connection in a try/catch block.
                     // Create and execute the DataReader, writing the result
@@ -46,13 +48,12 @@ namespace SAE_Search_Tool_Client.Models.DataAccess
                     try
                     {
                         connection.Open();
-                        SqlDataReader reader = command.ExecuteReader();
-                        while (reader.Read())
+                        DataFromDB rdr = new SqlDataReader rdr = queryOne.ExecuteReader();
+                        while (rdr.Read())
                         {
-                            Console.WriteLine("\t{0}\t{1}\t{2}",
-                                reader[0], reader[1], reader[2]);
+                            
                         }
-                        reader.Close();
+                        rdr.Close();
                     }
                     catch (Exception ex)
                     {

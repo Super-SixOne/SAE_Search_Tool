@@ -61,7 +61,9 @@ namespace SAE_Search_Tool_Client.Models.BusinessLogic
                 _Path = value;
             }
         }
-        public string Text { get; set; }
+        public string EingabeText { get; set; }
+
     }
-        
+
+
 }
