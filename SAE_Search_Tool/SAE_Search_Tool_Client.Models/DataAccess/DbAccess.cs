@@ -12,28 +12,13 @@ namespace SAE_Search_Tool_Client.Models.DataAccess
     /// <summary>
     /// Class that provides functionality to access a database.
     /// </summary>
-    
+
     class DbAccess
     {
         public bool IsConnected { get; private set; }
-        public bool Connect(object sender, EventArgs e)
-        {
-            bool success = false;
-            try
-            {
-                SqlConnection con = new SqlConnection("data source=.;database=Sample; integraded security=SSPI"); // data source=. = local server
-                con.Open();
-                IsConnected = true;
-            }
-            catch (Exception)
-            {
-                IsConnected = false;
-            }
 
-            return success;
-        }
-        /// SqlDataReader rdr = cmd.ExecuteReader();
-            
+            string con = "data source=local;database=Sample; Integrated security=true"; // data source=. = local server
+            /// SqlDataReader rdr = cmd.ExecuteReader();
         void FindOneWordOnDb(object sender, EventArgs e)
         {
 
@@ -42,31 +27,42 @@ namespace SAE_Search_Tool_Client.Models.DataAccess
 
         public List<DataFromDB> SingleWordSearch()
         {
-            string sql = string.Format("select Id, Path, Text from TABLE where to_tsvector(Text) @@ to_tsquery('{0}'); ",SearchWord);
-            List<DataFromDB> ltemp = new List<DataFromDB>();
 
+            List<DataFromDB> ltemp = new List<DataFromDB>();
             try
             {
-                DataTable t = sql.ExecuteReader();
+                using (SqlConnection connection = new SqlConnection(con))
 
-                foreach (DataRow r in t.Rows)
                 {
-                    DataFromDB k = new DataFromDB();
-                    k.IdData = long.Parse(r["idData"]?.ToString());
-                    k.Path = r["Path"]?.ToString();
-                    k.Text = r["Text"]?.ToString();
+                    string sql = string.Format("select Id, Path, Text from TABLE " +
+                        "where to_tsvector(Text) @@ to_tsquery('@Text'); ", SearchString.Text);
+                    // Create the Command and Parameter objects.
+                    SqlCommand command = new SqlCommand(sql, connection);
+                    command.Parameters.AddWithValue("@pricePoint", paramValue);
 
-                    ltemp.Add(k);
+                    // Open the connection in a try/catch block.
+                    // Create and execute the DataReader, writing the result
+                    // set to the console window.
+                    try
+                    {
+                        connection.Open();
+                        SqlDataReader reader = command.ExecuteReader();
+                        while (reader.Read())
+                        {
+                            Console.WriteLine("\t{0}\t{1}\t{2}",
+                                reader[0], reader[1], reader[2]);
+                        }
+                        reader.Close();
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.Message);
+                    }
+                    Console.ReadLine();
                 }
-            }
-            catch (Exception ex)
-            {
-                if (ErrorMessage != null)
-                    ErrorMessage("Fehler in GetKFZList: " + ex.Message);
-            }
-
-            return ltemp;
+            }               
         }
     }
 }
+
 

@@ -37,14 +37,6 @@ namespace SAE_Search_Tool_Client.Models.BusinessLogic
             File.WriteAllText(@"E:\Search Tool\SAE_Search_Tool\Developement Testing\DriveConfig.json", json);
         }
 
-
-
-
-
-
-
-
-
     }
     public class Data
     {
@@ -71,5 +63,5 @@ namespace SAE_Search_Tool_Client.Models.BusinessLogic
         }
         public string Text { get; set; }
     }
-        public bool IsConnected { get; private set; }
+        
 }
