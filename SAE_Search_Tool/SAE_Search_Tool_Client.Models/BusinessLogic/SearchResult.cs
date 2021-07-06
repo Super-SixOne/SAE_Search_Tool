@@ -51,4 +51,25 @@ namespace SAE_Search_Tool_Client.Models.BusinessLogic
         public string Drive { get; set; }
         public string SubFolders { get; set; }
     }
+
+    public class DataFromDB
+    {
+        public long IdData { get; set; }
+
+        private string _Path;
+        public string Path
+        {
+            get
+            {
+                return _Path;
+            }
+
+            set
+            {
+                _Path = value;
+            }
+        }
+        public string Text { get; set; }
+    }
+        public bool IsConnected { get; private set; }
 }

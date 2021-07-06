@@ -12,16 +12,61 @@ namespace SAE_Search_Tool_Client.Models.DataAccess
     /// <summary>
     /// Class that provides functionality to access a database.
     /// </summary>
+    
     class DbAccess
     {
-        protected void SQLTest(object sender, EventArgs e)
+        public bool IsConnected { get; private set; }
+        public bool Connect(object sender, EventArgs e)
         {
-            SqlConnection con = new SqlConnection("data source=.;database=Sample; integraded security=SSPI"); // data source=. = local server
-            SqlCommand cmd = new SqlCommand("Select * from Yoink", con);
-            con.Open();
-            SqlDataReader rdr = cmd.ExecuteReader();
-            con.Close();
-        }      
+            bool success = false;
+            try
+            {
+                SqlConnection con = new SqlConnection("data source=.;database=Sample; integraded security=SSPI"); // data source=. = local server
+                con.Open();
+                IsConnected = true;
+            }
+            catch (Exception)
+            {
+                IsConnected = false;
+            }
+
+            return success;
+        }
+        /// SqlDataReader rdr = cmd.ExecuteReader();
+            
+        void FindOneWordOnDb(object sender, EventArgs e)
+        {
+
+
+        }
+
+        public List<DataFromDB> SingleWordSearch()
+        {
+            string sql = string.Format("select Id, Path, Text from TABLE where to_tsvector(Text) @@ to_tsquery('{0}'); ",SearchWord);
+            List<DataFromDB> ltemp = new List<DataFromDB>();
+
+            try
+            {
+                DataTable t = sql.ExecuteReader();
+
+                foreach (DataRow r in t.Rows)
+                {
+                    DataFromDB k = new DataFromDB();
+                    k.IdData = long.Parse(r["idData"]?.ToString());
+                    k.Path = r["Path"]?.ToString();
+                    k.Text = r["Text"]?.ToString();
+
+                    ltemp.Add(k);
+                }
+            }
+            catch (Exception ex)
+            {
+                if (ErrorMessage != null)
+                    ErrorMessage("Fehler in GetKFZList: " + ex.Message);
+            }
+
+            return ltemp;
+        }
     }
 }
 
