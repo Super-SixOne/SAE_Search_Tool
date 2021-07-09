@@ -51,7 +51,7 @@ namespace SAE_Search_Tool_Client.Models.DataAccess
                         DataFromDB rdr = new SqlDataReader rdr = queryOne.ExecuteReader();
                         while (rdr.Read())
                         {
-                            
+                            /// Test Test
                         }
                         rdr.Close();
                     }
