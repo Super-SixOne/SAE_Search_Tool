@@ -7,29 +7,34 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace SAE_Search_Tool_Client.Models.BusinessLogic
+{
+    public class JsonCreation
     {
-        public class JsonCreation
-        {
-            //list
-            //_List creation
+        //list
+        //_List creation
 
-            List<Data> _DriveList = new List<Data>();
-            public void InitializeTestData()
+        List<Data> _DriveList = new List<Data>();
+
+        public string CurrentDirectory { get; set; }
+
+        public void InitializeTestData()
+        {
+            _DriveList.Add(new Data()
             {
-                _DriveList.Add(new Data()
-                {
-                    Drive = "C:",
-                    SubFolders = @"DataSubfolder\Kacke\Dumm"
-                });
-                string json = JsonConvert.SerializeObject(_DriveList);
-                File.WriteAllText(Path.GetFullPath, json);
-            }
+                Drive = "C:",
+                SubFolders = @"DataSubfolder\Kacke\Dumm"
+            });
+            string jsonName = "JsonConfig.Json";
+            string json = JsonConvert.SerializeObject(_DriveList);
+            CurrentDirectory = Directory.GetCurrentDirectory();
+            File.WriteAllText(CurrentDirectory + jsonName, json);
+        }
 
-        }
-        public class Data
-        {
-            public string Drive { get; set; }
-            public string SubFolders { get; set; }
-        }
     }
+    public class Data
+    {
+        public string Drive { get; set; }
+        public string SubFolders { get; set; }
+    }
+}
 }
