@@ -20,50 +20,7 @@ namespace SAE_Search_Tool_Client.Models.BusinessLogic
 
         #endregion
     }
-    public class JsonCreation
-    {
-        //list
-        //_List creation
 
-        List<Data> _DriveList = new List<Data>();
-        public void InitializeTestData()
-        {
-            _DriveList.Add(new Data()
-            {
-                Drive = "C:",
-                SubFolders = @"DataSubfolder\Kacke\Dumm"
-            });
-            string json = JsonConvert.SerializeObject(_DriveList);
-            File.WriteAllText(@"E:\Search Tool\SAE_Search_Tool\Developement Testing\DriveConfig.json", json);
-        }
-
-    }
-    public class Data
-    {
-        public string Drive { get; set; }
-        public string SubFolders { get; set; }
-    }
-
-    public class DataFromDB
-    {
-        public long IdData { get; set; }
-
-        private string _Path;
-        public string Path
-        {
-            get
-            {
-                return _Path;
-            }
-
-            set
-            {
-                _Path = value;
-            }
-        }
-        public string EingabeText { get; set; }
-
-    }
 
 
 }
