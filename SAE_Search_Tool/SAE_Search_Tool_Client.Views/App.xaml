@@ -3,7 +3,134 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:SAE_Search_Tool_Client.Views"
              StartupUri="/Views/MainWindow.xaml">
+
     <Application.Resources>
-         
+        <!--Buttons Dashboard-->
+        <Style TargetType="Button" x:Key="Button_Dashboard">
+
+            <Setter Property="Background" Value="DodgerBlue"/>
+
+            <Setter Property="MinHeight" Value="35"/>
+
+            <Setter Property="FontWeight" Value="DemiBold"/>
+
+            <Setter Property="TextBlock.TextAlignment" Value="Center"/>
+            <Setter Property="TextBlock.Foreground" Value="White"/>
+
+
+            <Setter Property="Template">
+                <Setter.Value>
+
+                    <ControlTemplate TargetType="Button">
+
+                        <Border CornerRadius="0" 
+                                Background="{TemplateBinding Background}" 
+                                BorderBrush="{TemplateBinding BorderBrush}" 
+                                BorderThickness="{TemplateBinding BorderThickness}">
+
+                            <ContentPresenter x:Name="contentPresenter" 
+                                              ContentTemplate="{TemplateBinding ContentTemplate}" 
+                                              Content="{TemplateBinding Content}" 
+                                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                                              Margin="{TemplateBinding Padding}" 
+                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        </Border>
+
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="LightBlue"/>
+                    <Setter Property="BorderBrush" Value="LightBlue"/>
+                    <Setter Property="BorderThickness" Value="0"/>
+                </Trigger>
+            </Style.Triggers>
+
+        </Style>
+
+        <!--Buttons Titelbar-->
+        <Style TargetType="Button" x:Key="Button_Titelbar">
+
+            <Setter Property="Background" Value="Transparent"/>
+
+            <Setter Property="MinHeight" Value="35"/>
+            <Setter Property="MinWidth" Value="35"/>
+
+            <Setter Property="Margin" Value="2,0,2,0"/>
+
+            <Setter Property="FontWeight" Value="DemiBold"/>
+
+            <Setter Property="TextBlock.TextAlignment" Value="Center" />
+            <Setter Property="TextBlock.Foreground" Value="Gray"/>
+
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border CornerRadius="0" Background="{TemplateBinding Background}" BorderBrush="#ccc" BorderThickness="0" >
+                            <ContentPresenter x:Name="contentPresenter" 
+                                              ContentTemplate="{TemplateBinding ContentTemplate}" 
+                                              Content="{TemplateBinding Content}" 
+                                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                                              Margin="{TemplateBinding Padding}" 
+                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="LightGray"/>
+                    <Setter Property="Foreground" Value="White"/>
+                </Trigger>
+            </Style.Triggers>
+
+        </Style>
+
+
+        <!--Button Close-->
+        <Style TargetType="Button" x:Key="Button_Close">
+
+            <Setter Property="Background" Value="Transparent"/>
+
+            <Setter Property="MinHeight" Value="35"/>
+            <Setter Property="MinWidth" Value="35"/>
+
+            <Setter Property="Margin" Value="2,0,2,0"/>
+
+            <Setter Property="FontWeight" Value="DemiBold"/>
+
+            <Setter Property="TextBlock.TextAlignment" Value="Center" />
+            <Setter Property="TextBlock.Foreground" Value="Gray"/>
+
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border CornerRadius="0" Background="{TemplateBinding Background}" BorderBrush="#ccc" BorderThickness="0" >
+                            <ContentPresenter x:Name="contentPresenter" 
+                                              ContentTemplate="{TemplateBinding ContentTemplate}" 
+                                              Content="{TemplateBinding Content}" 
+                                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                                              Margin="{TemplateBinding Padding}" 
+                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="Red"/>
+                    <Setter Property="Foreground" Value="White"/>
+                </Trigger>
+            </Style.Triggers>
+
+        </Style>
+
+        <!--StackPanel-->
+        <Style TargetType="StackPanel" x:Key="StackPanel_Container">
+        </Style>
     </Application.Resources>
 </Application>

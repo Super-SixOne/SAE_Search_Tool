@@ -16,14 +16,13 @@ using System.Windows.Shapes;
 namespace SAE_Search_Tool_Client.Views
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaktionslogik für ViewDirectories.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class ViewDirectories : UserControl
     {
-        public MainWindow()
+        public ViewDirectories()
         {
             InitializeComponent();
         }
-
     }
 }

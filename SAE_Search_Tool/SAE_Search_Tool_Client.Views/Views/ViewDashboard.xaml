@@ -1,0 +1,100 @@
+﻿<UserControl x:Class="SAE_Search_Tool_Client.Views.ViewDashboard"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:SAE_Search_Tool_Client.Views"
+             mc:Ignorable="d"
+             Background="DodgerBlue"
+             MinHeight="400"
+             MinWidth="150"
+             Height="auto"
+             Width="auto">
+
+    <Grid>
+
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0">
+
+            <!--Directory Button-->
+            <StackPanel 
+                Style="{StaticResource StackPanel_Container}">
+
+                <Button 
+                    Content="Scan"
+                    BorderThickness="6,0,0,0"
+                    BorderBrush="DodgerBlue"
+                    Style="{StaticResource Button_Dashboard}"
+                    Command="{Binding LoadDrivesCommand}"
+                    Width="auto">
+                </Button>
+
+            </StackPanel>
+
+            <!--Scan Button-->
+            <!--<StackPanel 
+                Style="{StaticResource StackPanel_Container}">
+
+                <Button 
+                    Content="Scan" 
+                    BorderThickness="6,0,0,0"
+                    BorderBrush="DodgerBlue"
+                    x:Name="btnScan"
+                    Style="{StaticResource Button_Dashboard}"
+                    Command="{Binding ShowScanViewCommmand}"
+                    Width="auto">
+                </Button>
+
+            </StackPanel>-->
+
+            <!--Directory Button-->
+            <StackPanel Style="{StaticResource StackPanel_Container}">
+                <Button 
+                    Content="Next.."                        
+                    BorderThickness="6,0,0,0"
+                    BorderBrush="DodgerBlue"
+                    Style="{StaticResource Button_Dashboard}"
+                    Command="{Binding ShowScanViewCommmand}"
+                    Width="auto">
+                </Button>
+            </StackPanel>
+
+            <!--Directory Button-->
+            <StackPanel Style="{StaticResource StackPanel_Container}">
+                <Button Content="Next.."
+                    BorderThickness="6,0,0,0"
+                    BorderBrush="DodgerBlue"
+                    Style="{StaticResource Button_Dashboard}"
+                    Command="{Binding ShowScanViewCommmand}"
+                    Width="auto">
+                </Button>
+            </StackPanel>
+
+
+
+        </StackPanel>
+
+        <StackPanel Grid.Row="1" 
+                    VerticalAlignment="Bottom">
+
+            <!--Close Button-->
+            <StackPanel Style="{StaticResource StackPanel_Container}">
+
+                <Button Content="Beenden"
+                        BorderThickness="2,0,0,0"
+                        BorderBrush="DodgerBlue"
+                        Style="{StaticResource Button_Dashboard}"
+                        Command="{Binding CloseCommand}"
+                        Width="auto">
+                </Button>
+
+            </StackPanel>
+
+        </StackPanel>
+
+    </Grid>
+</UserControl>

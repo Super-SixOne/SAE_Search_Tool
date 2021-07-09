@@ -16,14 +16,18 @@ using System.Windows.Shapes;
 namespace SAE_Search_Tool_Client.Views
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaktionslogik für ViewTitlebar.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class ViewTitlebar : UserControl
     {
-        public MainWindow()
+        public ViewTitlebar()
         {
             InitializeComponent();
         }
 
+        private void Close(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Shutdown();
+        }
     }
 }
