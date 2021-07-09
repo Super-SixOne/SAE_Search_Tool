@@ -1,69 +1,59 @@
-﻿using SAE_Search_Tool_Client.Models.BusinessLogic;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Data;
 using System.Text;
-using System.Threading.Tasks;
 using System.Data.SqlClient;
+using System.Data.SqlTypes;
+using System.Threading.Tasks;
 
 namespace SAE_Search_Tool_Client.Models.DataAccess
 {
-    /// <summary>
-    /// Class that provides functionality to access a database.
-    /// </summary>
-
-    class DbAccess
+    class DBAcess
     {
-        public bool IsConnected { get; private set; }
-
-            string con = "data source=local;database=Sample; Integrated security=true"; // data source=. = local server
-        private object paramValue;
-
-        /// SqlDataReader rdr = cmd.ExecuteReader();
-        void FindOneWordOnDb(object sender, EventArgs e)
+        static void Main()
         {
+            string connectionString =
+                "Data Source=(local);Initial Catalog=Northwind;"
+                + "Integrated Security=true";
 
+            // @Text = Placeholder.
+            string queryString =
+                "SELECT * from db.Database "
+                    + "where to_tsvector(name) @@ to_tsquery('> @Text');   "
+                    + "ORDER BY ;";
 
-        }
+            // Specify the parameter value.
+            string paramValue = "kommt von Overfläche";
 
-        public List<DataFromDB> SingleWordSearch()
-        {
-
-            List<DataFromDB> ltemp = new List<DataFromDB>();
-            try
+            // Create and open the connection in a using block. This
+            // ensures that all resources will be closed and disposed
+            // when the code exits.
+            using (SqlConnection connection =
+                new SqlConnection(connectionString))
             {
-                using (SqlConnection connection = new SqlConnection(con))
+                // Create the Command and Parameter objects.
+                SqlCommand command = new SqlCommand(queryString, connection);
+                command.Parameters.AddWithValue("@Text", paramValue);
 
+                // Open the connection in a try/catch block.
+                // Create and execute the DataReader, writing the result
+                // set to the console window.
+                try
                 {
-                    string sql = string.Format("select Id, Path, Text from TABLE " +
-                        "where to_tsvector(Text) @@ to_tsquery('@Text'); ");
-                    // Create the Command and Parameter objects.
-                    SqlCommand queryOne = new SqlCommand(sql, connection);
-                    command.Parameters.AddWithValue("@Text", paramValue);
-
-                    // Open the connection in a try/catch block.
-                    // Create and execute the DataReader, writing the result
-                    // set to the console window.
-                    try
+                    connection.Open();
+                    SqlDataReader reader = command.ExecuteReader();
+                    while (reader.Read())
                     {
-                        connection.Open();
-                        DataFromDB rdr = new SqlDataReader rdr = queryOne.ExecuteReader();
-                        while (rdr.Read())
-                        {
-                            /// Test Test
-                        }
-                        rdr.Close();
+                        reader[0];
                     }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine(ex.Message);
-                    }
-                    Console.ReadLine();
+                    reader.Close();
                 }
-            }               
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message); // Msg.Box.Show(ex.Message)
+                }
+                
+            }
         }
     }
 }
-
-
