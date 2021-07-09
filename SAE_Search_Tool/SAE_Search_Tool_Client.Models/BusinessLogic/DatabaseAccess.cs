@@ -27,5 +27,7 @@ namespace SAE_Search_Tool_Client.Models.BusinessLogic
             public string EingabeText { get; set; }
 
         }
+
+    
     }
 
