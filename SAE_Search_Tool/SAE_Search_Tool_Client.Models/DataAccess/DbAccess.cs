@@ -68,6 +68,7 @@ namespace SAE_Search_Tool_Client.Models.DataAccess
                         /// aus Tabelle eine Liste machen (falls nötig)
 
                     }
+                }
 
                 catch (Exception ex)
                 {

@@ -37,4 +37,3 @@ namespace SAE_Search_Tool_Client.Models.BusinessLogic
         public string SubFolders { get; set; }
     }
 }
-}
