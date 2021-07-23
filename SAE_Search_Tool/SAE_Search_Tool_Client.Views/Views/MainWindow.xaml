@@ -20,6 +20,15 @@
         <local:MainViewModel/>
     </Window.DataContext>
 
+    <Window.Resources>
+
+        <DataTemplate x:Key="ViewDirectories"
+                      DataType="{x:Type uc:MainViewModel}">
+            <uc:ViewDirectories/>
+        </DataTemplate>
+
+    </Window.Resources>
+
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="MouseLeftButtonDown">
             <i:InvokeCommandAction Command="{Binding MoveCommand}"/>
@@ -58,16 +67,38 @@
         </Canvas>
 
 
-        <uc:ViewDashboard Grid.Row="1"
-                              Grid.RowSpan="2"
-                              Visibility="{Binding}" 
-                              Grid.Column="0"/>
+        <uc:ViewDashboard 
+            Grid.Row="1"
+            Grid.RowSpan="2"
+            Grid.Column="0"/>
 
-        <uc:ViewDirectories Grid.Row="1"
-                            Grid.Column="1" 
-                            x:Name="ucViewDirectories"
-                            Visibility="{Binding}"/>
+        <ContentControl 
+            Grid.Row="1"
+            Grid.Column="1"
+            Content="{Binding }">
 
+            <ContentControl.Style>
+
+                <Style TargetType="{x:Type ContentControl}">
+                    <Setter Property="ContentTemplate" 
+                            Value="{StaticResource 
+                        ViewDirectories}" />
+                    <Style.Triggers>
+
+                        <DataTrigger 
+                            Binding="{Binding SwitchView}" 
+                            Value="1">
+
+                            <Setter 
+                                Property="ContentTemplate" 
+                                Value="{StaticResource ViewDirectories}">
+                            </Setter>
+
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </ContentControl.Style>
+        </ContentControl>
 
     </Grid>
 </Window>

@@ -16,10 +16,10 @@ namespace SAE_Search_Tool_Client.Views
 
         #region properties: public
 
-        public string CurrentDirectory
+        public string DirectoryOfExe
         {
-            get => _currentDirectory;
-            set => SetProperty(ref _currentDirectory, value);
+            get => _directoryOfExe;
+            set => SetProperty(ref _directoryOfExe, value);
         }
 
         public ObservableCollection<string> Drives
@@ -57,41 +57,11 @@ namespace SAE_Search_Tool_Client.Views
 
         #region Commands: public
 
-        public ICommand LoadDrivesCommand
-        {
-            get
-            {
-                if (_loadDrivesCommand == null)
-                {
-                    _loadDrivesCommand = new RelayCommand(ScanDrives);
-                }
-                return _loadDrivesCommand;
-            }
-        }
+        public ICommand LoadDrivesCommand => _loadDrivesCommand = _loadDrivesCommand ?? new RelayCommand(ScanDrives);
 
-        public ICommand SelectedDriveChangedCommand
-        {
-            get
-            {
-                if (_selectedDriveChangedCommand == null)
-                {
-                    _selectedDriveChangedCommand = new RelayCommand(GetDirectoriesFromDrive);
-                }
-                return _selectedDriveChangedCommand;
-            }
-        }
+        public ICommand SelectedDriveChangedCommand => _selectedDriveChangedCommand = _selectedDriveChangedCommand ?? new RelayCommand(GetDirectoriesFromDrive);
 
-        public ICommand SelectedDirectoryChangedCommand
-        {
-            get
-            {
-                if (_selectedDirectoryChangedCommand == null)
-                {
-                    _selectedDirectoryChangedCommand = new RelayCommand(GetFilesFromDirectories);
-                }
-                return _selectedDirectoryChangedCommand;
-            }
-        }
+        public ICommand SelectedDirectoryChangedCommand => _selectedDirectoryChangedCommand = _selectedDirectoryChangedCommand ?? new RelayCommand(GetFilesFromDirectories);
 
         #endregion Commands: public
 
@@ -153,7 +123,7 @@ namespace SAE_Search_Tool_Client.Views
         {
             // TODO Steven
             // Pfad zur exe -> Pfad für Json
-            CurrentDirectory = Directory.GetCurrentDirectory();
+            DirectoryOfExe = Directory.GetCurrentDirectory();
         }
 
         // TODO Steven: Was passiert mit den ausgewählten Dateien?
@@ -168,7 +138,7 @@ namespace SAE_Search_Tool_Client.Views
         private ICommand _selectedDirectoryChangedCommand;
 
         // TODO Steven -> Json Speicherort
-        private string _currentDirectory;
+        private string _directoryOfExe;
 
         private ObservableCollection<string> _drives;
         private ObservableCollection<string> _directories;

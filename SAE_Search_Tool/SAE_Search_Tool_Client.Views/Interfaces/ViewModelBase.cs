@@ -10,29 +10,9 @@ namespace SAE_Search_Tool_Client.Views
 
         #region properties: public
 
-        public ICommand CloseCommand
-        {
-            get
-            {
-                if (_closeCommand == null)
-                {
-                    _closeCommand = new RelayCommand(Close);
-                }
-                return _closeCommand;
-            }
-        }
+        public ICommand CloseCommand => _closeCommand = _closeCommand ?? new RelayCommand(Close);
 
-        public ICommand MoveCommand
-        {
-            get
-            {
-                if (_moveCommand == null)
-                {
-                    _moveCommand = new RelayCommand(MoveWindow);
-                }
-                return _moveCommand;
-            }
-        }
+        public ICommand MoveCommand => _moveCommand = _moveCommand ?? new RelayCommand(MoveWindow);
 
         #endregion properties: public
 

@@ -1,6 +1,7 @@
 ﻿using GalaSoft.MvvmLight.Command;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -20,13 +21,13 @@ namespace SAE_Search_Tool_Client.Views
             set => SetProperty(ref _currentDirectory, value);
         }
 
-        public List<string> Drives
+        public ObservableCollection<string> Drives
         {
             get => _drives;
             set => SetProperty(ref _drives, value);
         }
 
-        public List<string> Directories
+        public ObservableCollection<string> Directories
         {
             get => _directories;
             set => SetProperty(ref _directories, value);
@@ -52,6 +53,7 @@ namespace SAE_Search_Tool_Client.Views
                 return _loadDirectories;
             }
         }
+        public ICommand LoadDrivesCommand => _loadDrivesCommand = _loadDrivesCommand ?? new RelayCommand(ScanDirectories);
 
         #endregion commands: public
 
@@ -62,10 +64,12 @@ namespace SAE_Search_Tool_Client.Views
         private void ScanDirectories()
         {
             // Pfad zur exe -> Pfad für Json
+
             CurrentDirectory = Directory.GetCurrentDirectory();
 
+
             // Alle Laufwerke
-            Drives = Directory.GetLogicalDrives().ToList();
+            Drives = new ObservableCollection<string>(Directory.GetLogicalDrives().ToList());
 
             // Infos der Laufwerke ermitteln
             DriveInfo info = null;
@@ -104,9 +108,9 @@ namespace SAE_Search_Tool_Client.Views
 
         private string _currentDirectory;
 
-        private List<string> _drives;
+        private ObservableCollection<string> _drives;
 
-        private List<string> _directories;
+        private ObservableCollection<string> _directories;
 
 
         #endregion properties: private
@@ -116,6 +120,8 @@ namespace SAE_Search_Tool_Client.Views
         #region commands: private
 
         private ICommand _loadDirectories;
+
+        private ICommand _loadDrivesCommand;
 
         #endregion commands: private
 
