@@ -13,6 +13,8 @@ namespace SAE_Search_Tool_Client.Views
     {
         #region properties: public
 
+        
+
         public ICommand MaximizeWindowCommand
         {
             get

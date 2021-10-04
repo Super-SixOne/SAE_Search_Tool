@@ -16,6 +16,28 @@ namespace SAE_Search_Tool_Client.Views
 
         #region properties: public
 
+        public ObservableCollection<string> GetAllFiles()
+        {
+            return Files;
+        }
+
+        public int CurrentView { get; set; }
+
+        /// <summary>
+        /// Viewansichten
+        /// </summary>
+        public enum Views
+        {
+            ViewDirectory,
+        }
+
+        public int SwitchView
+        {
+            get => switchView;
+            set => SetProperty(ref switchView, value);
+        }
+
+        // TODO nur für Steven -> Json Speicherort
         public string DirectoryOfExe
         {
             get => _directoryOfExe;
@@ -39,6 +61,15 @@ namespace SAE_Search_Tool_Client.Views
             get => _files;
             set => SetProperty(ref _files, value);
         }
+
+
+        public ObservableCollection<string> SelectedFiles
+        {
+            get { return _selectedFiles; }
+            set => SetProperty(ref _selectedFiles, value);
+        }
+
+
 
         public string SelectedDrive
         {
@@ -143,9 +174,12 @@ namespace SAE_Search_Tool_Client.Views
         private ObservableCollection<string> _drives;
         private ObservableCollection<string> _directories;
         private ObservableCollection<string> _files;
+        private ObservableCollection<string> _selectedFiles;
 
         private string _selectedDrive;
         private string _selectedDirectory;
+        private int switchView;
+
 
         #endregion properties: private
 

@@ -71,6 +71,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Helper\NotificationBase.cs" />
+    <Compile Include="Logic\Datakernel.cs" />
     <Compile Include="ViewModels\TitelbarViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\DashboardViewModel.cs" />
@@ -142,6 +143,8 @@
       <Name>SAE_Search_Tool_Client.Models</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="MainWindow_ViewComponents\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

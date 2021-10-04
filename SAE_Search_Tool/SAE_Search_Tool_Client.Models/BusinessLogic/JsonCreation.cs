@@ -26,7 +26,7 @@ namespace SAE_Search_Tool_Client.Models.BusinessLogic
             });
             string jsonName = "JsonConfig.Json";
             string json = JsonConvert.SerializeObject(_DriveList);
-            CurrentDirectory = Directory.GetCurrentDirectory();
+            CurrentDirectory = Directory.GetCurrentDirectory();             
             File.WriteAllText(CurrentDirectory + jsonName, json);
         }
 

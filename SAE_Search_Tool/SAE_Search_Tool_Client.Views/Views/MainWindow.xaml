@@ -67,11 +67,12 @@
         </Canvas>
 
 
+
         <uc:ViewDashboard 
             Grid.Row="1"
             Grid.RowSpan="2"
             Grid.Column="0"/>
-
+        
         <ContentControl 
             Grid.Row="1"
             Grid.Column="1"
@@ -87,7 +88,7 @@
 
                         <DataTrigger 
                             Binding="{Binding SwitchView}" 
-                            Value="1">
+                            Value="0">
 
                             <Setter 
                                 Property="ContentTemplate" 
@@ -95,6 +96,7 @@
                             </Setter>
 
                         </DataTrigger>
+
                     </Style.Triggers>
                 </Style>
             </ContentControl.Style>

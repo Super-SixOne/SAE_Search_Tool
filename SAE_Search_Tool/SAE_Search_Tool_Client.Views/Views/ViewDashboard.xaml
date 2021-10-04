@@ -54,14 +54,16 @@
 
             <!--Directory Button-->
             <StackPanel Style="{StaticResource StackPanel_Container}">
+
                 <Button 
                     Content="Next.."                        
                     BorderThickness="6,0,0,0"
                     BorderBrush="DodgerBlue"
                     Style="{StaticResource Button_Dashboard}"
-                    Command="{Binding ShowScanViewCommmand}"
+                    Command="{Binding SwitchViewCommand}"
                     Width="auto">
                 </Button>
+
             </StackPanel>
 
             <!--Directory Button-->
