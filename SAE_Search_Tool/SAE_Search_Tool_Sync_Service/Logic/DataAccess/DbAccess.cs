@@ -66,5 +66,10 @@ namespace SAE_Search_Tool_Sync_Service.Logic.DataAccess
             //TODO: Logic
             return new List<FileReaderResult>();
         }
+
+        public static IList<FileReaderResult> GetResults(string searchPattern)
+        {
+            return new List<FileReaderResult>();
+        }
     }
 }
