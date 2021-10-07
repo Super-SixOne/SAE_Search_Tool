@@ -13,7 +13,7 @@ namespace SAE_Search_Tool_Sync_Service.Logic.DataAccess
     /// </summary>
     public static class DbAccess
     {
-        public static string ConnectionString = "Server=10.194.9.131;Port=5432;Database=myDataBase;User Id=myUsername;Password=myPassword;";
+        public static string ConnectionString = "Server=10.194.9.131;Port=5432;Database=myDataBase;User Id=postgres;Password=Vahpeiwoqu1Haex4cem6;";
 
         public static void InsertData(IList<FileReaderResult> data)
         {
@@ -21,9 +21,24 @@ namespace SAE_Search_Tool_Sync_Service.Logic.DataAccess
             {
                 connection.Open();
 
-                StringBuilder commandString = new StringBuilder("INSERT INTO table_name () VALUES");
+                StringBuilder commandString = new StringBuilder("INSERT INTO table_name (path, content, hash) VALUES (");
 
-                foreach(FileReaderResult result in data)
+                for(int i = 0; i < data.Count; i++)
+                {
+                    commandString.Append($"@p{i}");
+                    if(i + 1 < data.Count)
+                    { 
+                        commandString.Append(",");
+                    }
+                }
+                commandString.Append(")");
+
+                using(NpgsqlCommand command = new NpgsqlCommand(commandString.ToString(), connection))
+                {
+                    command.Parameters.AddWithValue()
+                }
+
+                foreach (FileReaderResult result in data)
                 {
 
                 }
