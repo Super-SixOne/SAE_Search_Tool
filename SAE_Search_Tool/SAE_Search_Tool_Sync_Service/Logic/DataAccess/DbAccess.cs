@@ -1,5 +1,6 @@
 ﻿using SAE_Search_Tool_Sync_Service.Logic.Models;
 using System;
+using Npgsql;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,49 +11,68 @@ namespace SAE_Search_Tool_Sync_Service.Logic.DataAccess
     /// <summary>
     /// Responsible for handling database connection and communication.
     /// </summary>
-    class DbAccess
+    public static class DbAccess
     {
-        /// <summary>
-        /// Inserts data into the database if it doesn´t already exist.
-        /// </summary>
-        /// <param name="fileReaderResults">The list of <see cref="FileReaderResult"/> objects to insert.</param>
-        public void InsertData(IList<FileReaderResult> fileReaderResults)
+        public static string ConnectionString = "Server=10.194.9.131;Port=5432;Database=myDataBase;User Id=postgres;Password=Vahpeiwoqu1Haex4cem6;";
+
+        public static void InsertData(IList<FileReaderResult> data)
         {
-            //TODO: Establish connection
-            foreach(FileReaderResult result in fileReaderResults)
+            using (var connection = new NpgsqlConnection(DbAccess.ConnectionString))
             {
-                //TODO: Check if exists
-                //TODO: Insert into db
+                connection.Open();
+
+                StringBuilder commandString = new StringBuilder("INSERT INTO table_name (path, content, hash) VALUES (");
+
+                for(int i = 0; i < data.Count; i++)
+                {
+                    commandString.Append($"@p{i}");
+                    if(i + 1 < data.Count)
+                    { 
+                        commandString.Append(",");
+                    }
+                }
+                commandString.Append(")");
+
+                using(NpgsqlCommand command = new NpgsqlCommand(commandString.ToString(), connection))
+                {
+                    int i = 0;
+                    foreach(FileReaderResult result in data)
+                    {
+                        command.Parameters.AddWithValue($"p{i}", result.)
+                    }
+                }
+
+                foreach (FileReaderResult result in data)
+                {
+
+                }
+
+                // Execute non query
             }
         }
 
-        /// <summary>
-        /// Compares two lists of <see cref="FileReaderResult"/> objects and deletes all entries from the database that are only present in the second list.
-        /// </summary>
-        /// <param name="fileReaderResults">The reference list of all <see cref="FileReaderResult"/> objects that should be present in the database.</param>
-        /// <param name="searchResults">The list of all <see cref="FileReaderResult"/> objects present in the database.</param>
-        public void DeleteData(IList<FileReaderResult> fileReaderResults, IList<FileReaderResult> searchResults)
+        public static void DeleteData(IList<FileReaderResult> data)
         {
-
+            // Execute non query
         }
 
-        /// <summary>
-        /// Updates the database entries by calling <see cref="InsertData(IList{FileReaderResult})"/> and <see cref="DeleteData(IList{FileReaderResult}, IList{FileReaderResult})"/> subsequently.
-        /// </summary>
-        /// <param name="fileReaderResults">The reference list to compare the database entries against.</param>
-        public void UpdateDatabaseEntries(IList<FileReaderResult> fileReaderResults)
+        public static void UpdateDatabaseEntries(IList<FileReaderResult> data)
         {
-            InsertData(fileReaderResults);
-            DeleteData(fileReaderResults, GetAllData());
+            // Execute non query
         }
 
         /// <summary>
         /// Gets all data in the database as <see cref="FileReaderResult"/> objects.
         /// </summary>
         /// <returns>A list of <see cref="FileReaderResult"/> objects.</returns>
-        public IList<FileReaderResult> GetAllData()
+        public static IList<FileReaderResult> GetResults()
         {
             //TODO: Logic
+            return new List<FileReaderResult>();
+        }
+
+        public static IList<FileReaderResult> GetResults(string searchPattern)
+        {
             return new List<FileReaderResult>();
         }
     }

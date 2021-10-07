@@ -7,6 +7,7 @@ using System.Data.SqlTypes;
 using System.Data;
 using System.Threading.Tasks;
 using System.Collections.ObjectModel;
+using SAE_Search_Tool_Client.Models.BusinessLogic;
 
 namespace SAE_Search_Tool_Client.Models.DataAccess
 {
@@ -27,7 +28,6 @@ namespace SAE_Search_Tool_Client.Models.DataAccess
         {
             SetSqlConnectionSettings();
 
-            // TODO Marc -> EF Core? Abklären & dann austauschen, weil 1. Extrapunkte 2. praktisch & modern
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
                 // Create the Command and Parameter objects.
@@ -36,21 +36,22 @@ namespace SAE_Search_Tool_Client.Models.DataAccess
 
                 // Open the connection in a try/catch block.
                 // Create and execute the DataReader, writing the result
-                // set to the console window.
                 try
                 {
                     connection.Open();
-                    ///SqlDataReader reader = command.ExecuteReader();
+                    SqlDataReader reader = command.ExecuteReader();
                     SqlDataAdapter adapter = new SqlDataAdapter(command);
 
-                    adapter.Fill(_dataTable);
+                    DataTable dataTable = new DataTable();
 
-                    List<DBAccess> DBList = new List<DBAccess>();
-                    for (int i = 0; i < _dataTable.Rows.Count; i++)
-                    {
+                    adapter.Fill(dataTable);
+
+                    //List<DBAccess> DBList = new List<DBAccess>();
+                    //for (int i = 0; i < _dataTable.Rows.Count; i++)
+                    //{
                         /// aus Tabelle eine Liste machen (falls nötig)
 
-                    }
+                    //}
                 }
 
                 catch (Exception ex)
@@ -59,49 +60,6 @@ namespace SAE_Search_Tool_Client.Models.DataAccess
                     Console.WriteLine(ex.Message); // Msg.Box.Show(ex.Message)
                 }
             }
-        }
-
-        // TODO Marc -> Siehe Stellen, an denen _connectionString, _queryString und _paramValue bisher benutzt werden
-        // und schau, ob man diese nochmal braucht (Tipp: -> Klicke auf eine Variable / Funktion und drück Shift + F12, dann siehst du alle Verweise)
-        // wenn ja nach kommentiere die jeweilige Funktion wieder aus, ansonsten kannst du die löschen
-
-        //public string GetConnectionString()
-        //{
-        //    return _connectionString;
-        //}
-
-        //public string GetQueryString()
-        //{
-        //    return _queryString;
-        //}
-
-        //public string GetParamValueString()
-        //{
-        //    return _paramValue;
-        //}
-
-        public DataTable GetDataTable()
-        {
-            return _dataTable;
-        }
-
-        // TODO Marc -> schreib die Funktion fertig und melde dich bei Fragen
-        public static void SearchInputInDatabase()
-        {
-            DBAccess access = DBAccess.GetInstance();
-
-            DataTable dataTable = access.GetDataTable();
-
-            dataTable.Columns.Add("Id", typeof(Int32));
-            dataTable.Columns.Add("Path", typeof(string));
-            dataTable.Columns.Add("Text", typeof(string));
-
-            // TODO Marc -> Kann man auf diese Listen vom Außen zugreifen? Überprüfen
-            List<DataRow> dataTableAsList = (dataTable.AsEnumerable()).ToList();
-
-            ObservableCollection<DataRow> dataTableAsCollection = new ObservableCollection<DataRow>(dataTableAsList);
-
-            access.OpenSqlConnection();
         }
 
         #endregion methods: public
@@ -120,20 +78,21 @@ namespace SAE_Search_Tool_Client.Models.DataAccess
 
         #region methods: private
 
+        // Temp Solution until we put connection string into settings file.
         private void SetSqlConnectionSettings()
         {
             if (Equals(_connectionString, string.Empty))
             {
                 _connectionString =
-                    "Data Source=(local);Initial Catalog=Northwind;"
-                    + "Integrated Security=true";
+                    "User ID = postgres; Password = schumi1997; Server = localhost; Port = 5432; Database = DB_searchtool; "
+                    + "Integrated Security = true;";
             }
 
             if (Equals(_queryString, string.Empty))
             {
                 _queryString =
-                    "SELECT * from db.Database "
-                        + "where to_tsvector(name) @@ to_tsquery('> @Text');   "
+                    "SELECT * from DB_searchtooldb. "
+                        + "select * from public.\"SearchTable\"where to_tsvector(\"Text\") @@ to_tsquery('Lorem'); "
                         + "ORDER BY ;";
             }
         }
@@ -145,7 +104,6 @@ namespace SAE_Search_Tool_Client.Models.DataAccess
 
         // Das ist die einzige globale Instanz
         private static DBAccess _db = null;
-        private DataTable _dataTable = new DataTable("DataFromDB");
 
         // private, damit sie nicht von Außen verändert werden können
         private string _connectionString = string.Empty;
