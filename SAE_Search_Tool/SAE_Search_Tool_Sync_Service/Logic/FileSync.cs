@@ -4,6 +4,7 @@ using SAE_Search_Tool_Sync_Service.Logic.Models;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.IO;
 using System.Linq;
 using System.Threading;
 
@@ -22,10 +23,12 @@ namespace SAE_Search_Tool_Sync_Service
                 // Fill results to get current state of files
                 foreach (string path in paths)
                 {
-                    resultsNew.Add(new FileReaderResult(path, FileReader.GetContent(path)));     
+                    if (File.Exists(path)) 
+                    {
+                        resultsNew.Add(new FileReaderResult(path, FileReader.GetContent(path)));
+                    }
                 }
                  
-                
                 IList<FileReaderResult> inserts = new List<FileReaderResult>();
                 IList<FileReaderResult> updates = new List<FileReaderResult>();
                 IList<FileReaderResult> deletes = new List<FileReaderResult>();
@@ -45,9 +48,10 @@ namespace SAE_Search_Tool_Sync_Service
                         updates.Add(result);
                         continue;
                     }
-
-
                 }
+
+                // 3. Delete all DB entries which are only present there
+                
 
                 // Wait defined amount of milliseconds before syncing again.
                 Thread.Sleep(Convert.ToInt32(ConfigurationManager.AppSettings["downtime"]));
