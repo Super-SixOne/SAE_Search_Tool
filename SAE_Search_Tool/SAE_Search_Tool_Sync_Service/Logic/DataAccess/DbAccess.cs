@@ -35,7 +35,11 @@ namespace SAE_Search_Tool_Sync_Service.Logic.DataAccess
 
                 using(NpgsqlCommand command = new NpgsqlCommand(commandString.ToString(), connection))
                 {
-                    command.Parameters.AddWithValue()
+                    int i = 0;
+                    foreach(FileReaderResult result in data)
+                    {
+                        command.Parameters.AddWithValue($"p{i}", result.)
+                    }
                 }
 
                 foreach (FileReaderResult result in data)

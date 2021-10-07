@@ -25,7 +25,8 @@ namespace SAE_Search_Tool_Sync_Service
                 {
                     if (File.Exists(path)) 
                     {
-                        resultsNew.Add(new FileReaderResult(path, FileReader.GetContent(path)));
+                        FileReader fr = new FileReader();
+                        resultsNew.Add(new FileReaderResult(path, fr.GetContent(path)));
                     }
                 }
 

@@ -82,6 +82,9 @@
     <Reference Include="System.Net.Http" />
     <Reference Include="System.ServiceProcess" />
     <Reference Include="System.Xml" />
+    <Reference Include="Visualis.Extractor">
+      <HintPath>..\External\Visualis.Extractor.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Logic\DataAccess\DbAccess.cs" />
