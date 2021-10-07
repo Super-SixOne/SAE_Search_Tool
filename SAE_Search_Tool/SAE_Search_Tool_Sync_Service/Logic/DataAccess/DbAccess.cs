@@ -1,5 +1,6 @@
 ﻿using SAE_Search_Tool_Sync_Service.Logic.Models;
 using System;
+using Npgsql;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,19 +13,33 @@ namespace SAE_Search_Tool_Sync_Service.Logic.DataAccess
     /// </summary>
     public static class DbAccess
     {
+        public static string ConnectionString = "Server=10.194.9.131;Port=5432;Database=myDataBase;User Id=myUsername;Password=myPassword;";
+
         public static void InsertData(IList<FileReaderResult> data)
         {
-            
+            using (var connection = new NpgsqlConnection(DbAccess.ConnectionString))
+            {
+                connection.Open();
+
+                StringBuilder commandString = new StringBuilder("INSERT INTO table_name () VALUES");
+
+                foreach(FileReaderResult result in data)
+                {
+
+                }
+
+                // Execute non query
+            }
         }
 
         public static void DeleteData(IList<FileReaderResult> data)
         {
-
+            // Execute non query
         }
 
         public static void UpdateDatabaseEntries(IList<FileReaderResult> data)
         {
-            
+            // Execute non query
         }
 
         /// <summary>
