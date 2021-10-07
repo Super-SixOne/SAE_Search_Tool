@@ -11,9 +11,11 @@ namespace SAE_Search_Tool_Sync_Service
         {
             while (true)
             {
-                JsonParser parser = new JsonParser();
+                var res = JsonParser.GetSearchPatterns();
 
-                var res = parser.GetSearchPatterns();
+                // loop through the list and get the file contents.
+                // First check if the file can be opened and the path exists
+                // We will receive a dictionary of file paths and content
 
                 // Wait defined amount of milliseconds before syncing again.
                 Thread.Sleep(Convert.ToInt32(ConfigurationManager.AppSettings["downtime"]));
