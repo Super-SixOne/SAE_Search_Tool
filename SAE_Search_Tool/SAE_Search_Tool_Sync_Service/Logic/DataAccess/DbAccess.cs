@@ -12,30 +12,19 @@ namespace SAE_Search_Tool_Sync_Service.Logic.DataAccess
     /// </summary>
     public static class DbAccess
     {
-        public static void InsertData(FileReaderResult data)
+        public static void InsertData(IList<FileReaderResult> data)
         {
-            // Check if there is a matching path in the DB already.
-            data.Path
+            
         }
 
-        /// <summary>
-        /// Compares two lists of <see cref="FileReaderResult"/> objects and deletes all entries from the database that are only present in the second list.
-        /// </summary>
-        /// <param name="fileReaderResults">The reference list of all <see cref="FileReaderResult"/> objects that should be present in the database.</param>
-        /// <param name="searchResults">The list of all <see cref="FileReaderResult"/> objects present in the database.</param>
-        public static void DeleteData(IList<FileReaderResult> fileReaderResults, IList<FileReaderResult> searchResults)
+        public static void DeleteData(IList<FileReaderResult> data)
         {
 
         }
 
-        /// <summary>
-        /// Updates the database entries by calling <see cref="InsertData(IList{FileReaderResult})"/> and <see cref="DeleteData(IList{FileReaderResult}, IList{FileReaderResult})"/> subsequently.
-        /// </summary>
-        /// <param name="fileReaderResults">The reference list to compare the database entries against.</param>
-        public static void UpdateDatabaseEntries(IList<FileReaderResult> fileReaderResults)
+        public static void UpdateDatabaseEntries(IList<FileReaderResult> data)
         {
-            InsertData(fileReaderResults);
-            DeleteData(fileReaderResults, GetAllData());
+            
         }
 
         /// <summary>
