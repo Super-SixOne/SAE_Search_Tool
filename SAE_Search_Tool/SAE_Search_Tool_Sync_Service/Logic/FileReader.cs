@@ -12,6 +12,10 @@ namespace SAE_Search_Tool_Sync_Service.Logic
     /// </summary>
     public static class FileReader
     {
-
+        public static string GetContent(string path)
+        {
+            // TODO: implement with dll
+            return "Hello";
+        }
     }
 }

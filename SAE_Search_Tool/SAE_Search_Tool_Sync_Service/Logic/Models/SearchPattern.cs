@@ -8,10 +8,7 @@ namespace SAE_Search_Tool_Sync_Service.Logic.Models
     /// </summary>
     public class SearchPattern
     {
-        [JsonProperty("drive")]
-        public string Drive { get; set; }
-
-        [JsonProperty("subfolders")]
-        public List<string> Subfolders { get; set; }
+        [JsonProperty("paths")]
+        public List<string> Paths { get; set; }
     }
 }
