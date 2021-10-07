@@ -55,7 +55,6 @@
     <Compile Include="Logic\FileSync.cs" />
     <Compile Include="Logic\JsonParser.cs" />
     <Compile Include="Logic\Models\FileReaderResult.cs" />
-    <Compile Include="Logic\Models\SearchPattern.cs" />
     <Compile Include="ProjectInstaller.cs">
       <SubType>Component</SubType>
     </Compile>
