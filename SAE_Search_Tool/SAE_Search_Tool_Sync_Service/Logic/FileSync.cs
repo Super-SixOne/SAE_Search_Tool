@@ -21,14 +21,14 @@ namespace SAE_Search_Tool_Sync_Service
                 IList<FileReaderResult> resultsOld = DbAccess.GetResults();
 
                 // Fill results to get current state of files
-                foreach (string path in paths)
+                foreach (string path in paths) 
                 {
                     if (File.Exists(path)) 
                     {
                         resultsNew.Add(new FileReaderResult(path, FileReader.GetContent(path)));
                     }
                 }
-                 
+
                 IList<FileReaderResult> inserts = new List<FileReaderResult>();
                 IList<FileReaderResult> updates = new List<FileReaderResult>();
                 IList<FileReaderResult> deletes = new List<FileReaderResult>();
@@ -46,12 +46,19 @@ namespace SAE_Search_Tool_Sync_Service
                     if(resultsOld.Where(r => r.Path == result.Path).First().SHA512 != result.SHA512)
                     {
                         updates.Add(result);
-                        continue;
                     }
                 }
 
-                // 3. Delete all DB entries which are only present there
-                
+                // 3. Delete all DB entries which are only present there but not in the config file.
+                foreach(FileReaderResult result in resultsOld)
+                {
+                    if (!paths.Contains(result.Path))
+                    {
+                        deletes.Add(result);
+                    }
+                }
+
+
 
                 // Wait defined amount of milliseconds before syncing again.
                 Thread.Sleep(Convert.ToInt32(ConfigurationManager.AppSettings["downtime"]));
