@@ -13,6 +13,7 @@ namespace SAE_Search_Tool_Sync_Service.Logic.DataAccess
     public static class DbAccess
     {
         public static string ConnectionString = "Server=10.194.9.131;Port=5432;Database=myDataBase;User Id=postgres;Password=Vahpeiwoqu1Haex4cem6;";
+        public static string TableName = "table_name";
 
         public static void InsertData(IList<FileReaderResult> data)
         {
@@ -20,7 +21,7 @@ namespace SAE_Search_Tool_Sync_Service.Logic.DataAccess
             {
                 connection.Open();
 
-                StringBuilder commandString = new StringBuilder("INSERT INTO table_name (path, content, hash) VALUES (");
+                StringBuilder commandString = new StringBuilder($"INSERT INTO {DbAccess.TableName} (path, content, hash) VALUES (");
 
                 for(int i = 0; i < data.Count; i++)
                 {
@@ -39,6 +40,7 @@ namespace SAE_Search_Tool_Sync_Service.Logic.DataAccess
                         commandString.Append(",");
                     }
                 }
+
                 commandString.Append(")");
 
                 using(NpgsqlCommand command = new NpgsqlCommand(commandString.ToString(), connection))
@@ -62,7 +64,29 @@ namespace SAE_Search_Tool_Sync_Service.Logic.DataAccess
             {
                 connection.Open();
 
-                StringBuilder commandString = new StringBuilder("INSERT INTO table_name (path, content, hash) VALUES (");
+                StringBuilder commandString = new StringBuilder($"DELETE FROM {DbAccess.TableName} WHERE hash IN (");
+
+                for(int i = 0; i < data.Count; i++)
+                {
+                    commandString.Append($"@p{i}");
+                    if (i + 1 < data.Count)
+                    {
+                        commandString.Append(",");
+                    }
+                }
+
+                commandString.Append(")");
+
+                using (NpgsqlCommand command = new NpgsqlCommand(commandString.ToString(), connection))
+                {
+                    int i = 0;
+                    foreach (FileReaderResult result in data)
+                    {
+                        command.Parameters.AddWithValue($"p{i}", result.SHA512);
+                    }
+
+                    command.ExecuteNonQuery();
+                }
             }
         }
 
