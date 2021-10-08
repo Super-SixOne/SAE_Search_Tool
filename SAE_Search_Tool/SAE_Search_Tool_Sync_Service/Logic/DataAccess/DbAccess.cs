@@ -118,12 +118,13 @@ namespace SAE_Search_Tool_Sync_Service.Logic.DataAccess
         /// <returns>A list of <see cref="FileReaderResult"/> objects.</returns>
         public static IList<FileReaderResult> GetResults()
         {
-            //TODO: Logic
+            //TODO: Logic Select *
             return new List<FileReaderResult>();
         }
 
         public static IList<FileReaderResult> GetResults(string searchPattern)
         {
+            //TODO: Logic
             return new List<FileReaderResult>();
         }
     }
