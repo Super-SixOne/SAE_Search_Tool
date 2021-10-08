@@ -4,7 +4,6 @@ using Npgsql;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace SAE_Search_Tool_Sync_Service.Logic.DataAccess
 {
@@ -17,7 +16,7 @@ namespace SAE_Search_Tool_Sync_Service.Logic.DataAccess
 
         public static void InsertData(IList<FileReaderResult> data)
         {
-            using (var connection = new NpgsqlConnection(DbAccess.ConnectionString))
+            using (NpgsqlConnection connection = new NpgsqlConnection(DbAccess.ConnectionString))
             {
                 connection.Open();
 
@@ -25,9 +24,18 @@ namespace SAE_Search_Tool_Sync_Service.Logic.DataAccess
 
                 for(int i = 0; i < data.Count; i++)
                 {
-                    commandString.Append($"@p{i}");
+                    for(int j = 0; j < 3; j++)
+                    {
+                        commandString.Append($"@p{i}{j}");
+                        if (j + 1 < 3)
+                        {
+                            commandString.Append(",");
+                        }
+                    }
+
+                    commandString.Append(")");
                     if(i + 1 < data.Count)
-                    { 
+                    {
                         commandString.Append(",");
                     }
                 }
@@ -38,22 +46,24 @@ namespace SAE_Search_Tool_Sync_Service.Logic.DataAccess
                     int i = 0;
                     foreach(FileReaderResult result in data)
                     {
-                        command.Parameters.AddWithValue($"p{i}", result.)
+                        command.Parameters.AddWithValue($"p{i}{0}", result.Path);
+                        command.Parameters.AddWithValue($"p{i}{1}", result.Path);
+                        command.Parameters.AddWithValue($"p{i}{2}", result.Path);
                     }
+
+                    command.ExecuteNonQuery();
                 }
-
-                foreach (FileReaderResult result in data)
-                {
-
-                }
-
-                // Execute non query
             }
         }
 
         public static void DeleteData(IList<FileReaderResult> data)
         {
-            // Execute non query
+            using (NpgsqlConnection connection = new NpgsqlConnection(DbAccess.ConnectionString))
+            {
+                connection.Open();
+
+                StringBuilder commandString = new StringBuilder("INSERT INTO table_name (path, content, hash) VALUES (");
+            }
         }
 
         public static void UpdateDatabaseEntries(IList<FileReaderResult> data)
