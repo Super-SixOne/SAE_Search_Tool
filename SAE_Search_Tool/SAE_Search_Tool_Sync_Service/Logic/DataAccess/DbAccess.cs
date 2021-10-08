@@ -1,8 +1,6 @@
 ﻿using SAE_Search_Tool_Sync_Service.Logic.Models;
-using System;
 using Npgsql;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 
 namespace SAE_Search_Tool_Sync_Service.Logic.DataAccess
