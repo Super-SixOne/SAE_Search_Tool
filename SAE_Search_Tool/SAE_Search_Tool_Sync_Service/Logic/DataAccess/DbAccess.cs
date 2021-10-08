@@ -92,7 +92,26 @@ namespace SAE_Search_Tool_Sync_Service.Logic.DataAccess
 
         public static void UpdateDatabaseEntries(IList<FileReaderResult> data)
         {
-            // Execute non query
+            using (NpgsqlConnection connection = new NpgsqlConnection(DbAccess.ConnectionString))
+            {
+                connection.Open();
+
+                StringBuilder commandString = new StringBuilder($"UPDATE {DbAccess.TableName} SET hash = ");
+
+                foreach (FileReaderResult result in data)
+                {
+                    commandString.Append($"@p0, content = @p1 WHERE path = @p2");
+
+                    using (NpgsqlCommand command = new NpgsqlCommand(commandString.ToString(), connection))
+                    {
+                        command.Parameters.AddWithValue("p0", result.SHA512);
+                        command.Parameters.AddWithValue("p1", result.Content);
+                        command.Parameters.AddWithValue("p2", result.Path);
+
+                        command.ExecuteNonQuery();
+                    }
+                }
+            }
         }
 
         /// <summary>

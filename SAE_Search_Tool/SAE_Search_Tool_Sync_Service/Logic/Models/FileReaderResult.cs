@@ -9,10 +9,17 @@
         {
             this.Path = path;
             this.Content = content;
+            this.SHA512 = GetHash();
         }
 
-        public string Path { get; }
-        public string Content { get; }
-        public string SHA512 { get; }
+        public string Path { get; set; }
+        public string Content { get; set; }
+        public string SHA512 { get; set; }
+
+        private string GetHash()
+        {
+            // TODO: Logic for hash
+            return "hashValue";
+        }
     }
 }

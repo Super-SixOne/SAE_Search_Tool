@@ -59,8 +59,6 @@ namespace SAE_Search_Tool_Sync_Service
                     }
                 }
 
-
-
                 // Wait defined amount of milliseconds before syncing again.
                 Thread.Sleep(Convert.ToInt32(ConfigurationManager.AppSettings["downtime"]));
             }
