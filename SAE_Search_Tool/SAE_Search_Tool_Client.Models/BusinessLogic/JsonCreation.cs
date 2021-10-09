@@ -5,35 +5,29 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Collections.ObjectModel;
 
 namespace SAE_Search_Tool_Client.Models.BusinessLogic
 {
-    public class JsonCreation
+    public static class JsonCreation
     {
-        //list
-        //_List creation
-
-        List<Data> _DriveList = new List<Data>();
-
-        public string CurrentDirectory { get; set; }
-
-        public void InitializeTestData()
+       
+        public static void UpdateJson(ObservableCollection<string> FileInput)
         {
-            _DriveList.Add(new Data()
-            {
-                Drive = "C:",
-                SubFolders = @"DataSubfolder\Kacke\Dumm"
-            });
+
             string jsonName = "JsonConfig.Json";
-            string json = JsonConvert.SerializeObject(_DriveList);
-            CurrentDirectory = Directory.GetCurrentDirectory();             
-            File.WriteAllText(CurrentDirectory + jsonName, json);
+            string json = JsonConvert.SerializeObject(FileInput);
+            string CurrentDirectory = "C:\\ProgramData\\";
+            try
+            {
+                File.WriteAllText(CurrentDirectory + jsonName, json);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
-    }
-    public class Data
-    {
-        public string Drive { get; set; }
-        public string SubFolders { get; set; }
     }
 }

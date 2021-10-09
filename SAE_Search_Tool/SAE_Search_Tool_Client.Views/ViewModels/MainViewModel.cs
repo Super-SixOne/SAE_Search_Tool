@@ -1,5 +1,4 @@
 ﻿using GalaSoft.MvvmLight.Command;
-using SAE_Search_Tool_Client.Views.Logic;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;

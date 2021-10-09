@@ -1,10 +1,11 @@
-﻿using System;
+﻿using SAE_Search_Tool_Client.Views;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SAE_Search_Tool_Client.Views.Logic
+namespace SAE_Search_Tool_Client.views.Logic
 {
     static class Datakernel
     {
