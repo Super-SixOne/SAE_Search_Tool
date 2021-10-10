@@ -25,7 +25,6 @@ namespace SAE_Search_Tool_Client.Models.BusinessLogic
             }
         }
 
-        //TESTED
         public static IList<string> GetSearchPaths()
         {
             try
