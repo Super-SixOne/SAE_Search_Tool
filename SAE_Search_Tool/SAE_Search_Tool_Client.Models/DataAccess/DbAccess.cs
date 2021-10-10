@@ -139,10 +139,27 @@ namespace SAE_Search_Tool_Client.Models.DataAccess
             return results;
         }
 
-        public static IList<FileReaderResult> GetResults(string searchPattern)
+        public static IList<FileReaderResult> GetResults(string searchString)
         {
-            //TODO: Logic
-            return new List<FileReaderResult>();
+            IList<FileReaderResult> results = new List<FileReaderResult>();
+
+            using (NpgsqlConnection connection = new NpgsqlConnection(DbAccess.ConnectionString))
+            {
+                connection.Open();
+
+                using (NpgsqlCommand command = new NpgsqlCommand($"SELECT * FROM {DbAccess.TableName} WHERE to_tsvector(content) @@ to_tsquery({searchString});", connection))
+                {
+                    using (NpgsqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            results.Add(new FileReaderResult(reader.GetString(0), reader.GetString(1), reader.GetString(2)));
+                        }
+                    }
+                }
+            }
+
+            return results;
         }
     }
 }

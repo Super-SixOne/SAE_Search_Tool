@@ -2,14 +2,13 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Collections.ObjectModel;
 
 namespace SAE_Search_Tool_Client.Models.BusinessLogic
 {
     public static class JsonParser
     {
        
-        public static void WriteSearchPaths(ObservableCollection<string> fileInput)
+        public static void WriteSearchPaths(IList<string> fileInput)
         {
 
             string jsonName = "JsonConfig.json";
