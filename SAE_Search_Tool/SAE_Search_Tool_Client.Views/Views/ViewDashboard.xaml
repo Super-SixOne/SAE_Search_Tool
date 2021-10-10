@@ -4,6 +4,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:SAE_Search_Tool_Client.Views"
+             xmlns:logic="clr-namespace:SAE_Search_Tool_Client.Views.Logic"
+             DataContext="{x:Static logic:Datakernel.DashboardViewModel}"
              mc:Ignorable="d"
              Background="DodgerBlue"
              MinHeight="400"
@@ -36,27 +38,11 @@
 
             </StackPanel>
 
-            <!--Scan Button-->
-            <!--<StackPanel 
-                Style="{StaticResource StackPanel_Container}">
-
-                <Button 
-                    Content="Scan" 
-                    BorderThickness="6,0,0,0"
-                    BorderBrush="DodgerBlue"
-                    x:Name="btnScan"
-                    Style="{StaticResource Button_Dashboard}"
-                    Command="{Binding ShowScanViewCommmand}"
-                    Width="auto">
-                </Button>
-
-            </StackPanel>-->
-
             <!--Directory Button-->
             <StackPanel Style="{StaticResource StackPanel_Container}">
 
                 <Button 
-                    Content="Next.."                        
+                    Content="Ergebnisse"                        
                     BorderThickness="6,0,0,0"
                     BorderBrush="DodgerBlue"
                     Style="{StaticResource Button_Dashboard}"
@@ -67,15 +53,30 @@
             </StackPanel>
 
             <!--Directory Button-->
-            <StackPanel Style="{StaticResource StackPanel_Container}">
-                <Button Content="Next.."
-                    BorderThickness="6,0,0,0"
-                    BorderBrush="DodgerBlue"
-                    Style="{StaticResource Button_Dashboard}"
-                    Command="{Binding ShowScanViewCommmand}"
-                    Width="auto">
+            <!--<StackPanel Style="{StaticResource StackPanel_Container}">
+                <Button BorderThickness="6,0,0,0"
+                        BorderBrush="DodgerBlue"
+                        Style="{StaticResource Button_Dashboard}"
+                        Command="{Binding ShowScanViewCommmand}"
+                        Width="auto">
+
+                    <Button.Content>
+
+                        <StackPanel Orientation="Horizontal">
+
+                            <Viewbox Width="30">
+                                <Path Fill="#ffe17b"
+                                      Data="m558.17 118.41-292.39-59.564v430.32l293.4 59.769c6.5854 1.3416 12.122 4.5033 12.122-9.1473v-9.3872s-0.98416-12.522 16.162-9.0289c16.82 3.4613 16.162-9.0289 16.162-9.0289l0.00005-113.29s0.14566-12.296-15.075-15.397c-15.209-3.0983-17.25-17.617-17.25-17.617v-232.34c0.43213-15.361-6.6964-14.183-13.132-15.302z"/>
+                            </Viewbox>
+
+                            <TextBlock Text="Next">
+                            </TextBlock>
+                            
+                        </StackPanel>
+                    </Button.Content>
+
                 </Button>
-            </StackPanel>
+            </StackPanel>-->
 
 
 

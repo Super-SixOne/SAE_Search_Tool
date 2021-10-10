@@ -1,4 +1,6 @@
 ﻿using GalaSoft.MvvmLight.Command;
+using SAE_Search_Tool_Client.Models.BusinessLogic;
+using SAE_Search_Tool_Client.Views.Logic;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,11 +11,11 @@ using System.Windows.Input;
 
 namespace SAE_Search_Tool_Client.Views
 {
-    class TitelbarViewModel : ViewModelBase
+    public class TitelbarViewModel : ViewModelBase
     {
         #region properties: public
 
-        
+        public ICommand StartSearchCommand => _startSearchCommand = _startSearchCommand ?? new RelayCommand(SearchWordInFiles);
 
         public ICommand MaximizeWindowCommand
         {
@@ -45,6 +47,18 @@ namespace SAE_Search_Tool_Client.Views
 
         #region methods: private
 
+        private void SearchWordInFiles()
+        {
+            if (Datakernel.ExplorerVM.SelectedFiles != null && Datakernel.ExplorerVM.SelectedFiles.Count > 0)
+            {
+                JsonCreation.UpdateJson(Datakernel.ExplorerVM.SelectedFiles);
+            }
+            else
+            {
+                MessageBox.Show("Keine Dateien ausgewählt. Diese MessageBox wird ersetzt");
+            }
+        }
+
         private void MaximizeWindow()
         {
             //Application.Current.MainWindow.Height = 
@@ -60,6 +74,8 @@ namespace SAE_Search_Tool_Client.Views
 
 
         #region properties: private
+
+        private ICommand _startSearchCommand;
 
         private ICommand _maximizeWindowCommand;
 

@@ -4,8 +4,10 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:SAE_Search_Tool_Client.Views"
+             mc:Ignorable="d"
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-             mc:Ignorable="d" 
+             xmlns:logic="clr-namespace:SAE_Search_Tool_Client.Views.Logic"
+             DataContext="{x:Static logic:Datakernel.DirectoriesVM}"
              Background="White"
              d:DesignHeight="450" 
              d:DesignWidth="550">
@@ -24,18 +26,6 @@
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-
-        <!--Header Liste-->
-        <!--<Label FontSize="18"
-               Grid.Row="0"
-               Content="View 1"
-               FontWeight="DemiBold"
-               Foreground="DarkSlateGray">
-        </Label>-->
-
-        <!--<TextBox Text="{Binding CurrentDirectory}">
-
-        </TextBox>-->
 
         <!--Drives-->
         <ListView BorderBrush="Transparent"
@@ -92,44 +82,82 @@
             </ListView.View>
         </ListView>
 
-        <!--Files-->
-        <ListView BorderBrush="Transparent"
-                  Grid.Row="1"
+        <Grid Grid.Row="1"
+              Grid.Column="2">
+
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <!--Files-->
+            <ListView Grid.Row="0"
+                      Grid.Column="2"                  
+                      BorderBrush="Transparent"
+                      Foreground="DarkSlateGray"
+                      FontSize="14"
+                      FontWeight="DemiBold"
+                      SelectionMode="Multiple"
+                      ItemsSource="{Binding SubDirectories}">
+
+                <ListView.View>
+
+                    <GridView>
+
+                        <GridViewColumn 
+                            Header="Unterverzeichnisse" 
+                            Width="auto">
+                        </GridViewColumn>
+
+                    </GridView>
+
+                </ListView.View>
+            </ListView>
+
+            <ListView Grid.Row="1"
                   Grid.Column="2"                  
+                  BorderBrush="Transparent"
                   Foreground="DarkSlateGray"
                   FontSize="14"
                   FontWeight="DemiBold"
                   SelectionMode="Multiple"
                   ItemsSource="{Binding Files}">
 
+                <ListView.View>
+
+                    <GridView>
+
+                        <GridViewColumn 
+                            Header="Dateien" 
+                            Width="auto">
+                        </GridViewColumn>
+
+                    </GridView>
+
+                </ListView.View>
+            </ListView>
+        </Grid>
+
+
+        <!--Selected Files-->
+        <ListView Grid.Row="1"
+                  Grid.Column="3"
+                  BorderBrush="Transparent"
+                  Foreground="DarkSlateGray"
+                  FontSize="14"
+                  FontWeight="DemiBold"
+                  SelectionMode="Multiple"
+                  ItemsSource="{Binding SelectedFiles}">
+
             <ListView.View>
-
                 <GridView>
-
                     <GridViewColumn 
-                        Header="Dateien" 
+                        Header="Ausgewählte Dateien"                        
                         Width="auto">
                     </GridViewColumn>
-
-                </GridView>
-
-            </ListView.View>
-        </ListView>
-
-        <ListView
-            Grid.Row="1"
-            Grid.Column="3"
-            ItemsSource="{Binding SelectedFiles}">
-
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn
-                Header="Ausgewählte Dateien"
-                Width="auto">
-            </GridViewColumn>
                 </GridView>
             </ListView.View>
         </ListView>
-        
+
     </Grid>
 </UserControl>

@@ -72,12 +72,17 @@
     </ApplicationDefinition>
     <Compile Include="Helper\NotificationBase.cs" />
     <Compile Include="Logic\Datakernel.cs" />
+    <Compile Include="ViewModels\DirectoriesViewModel.cs" />
+    <Compile Include="ViewModels\ExplorerViewModel.cs" />
     <Compile Include="ViewModels\TitelbarViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\DashboardViewModel.cs" />
     <Compile Include="Interfaces\ViewModelBase.cs" />
     <Compile Include="Views\ViewDashboard.xaml.cs">
       <DependentUpon>ViewDashboard.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ViewExplorer.xaml.cs">
+      <DependentUpon>ViewExplorer.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ViewTitlebar.xaml.cs">
       <DependentUpon>ViewTitlebar.xaml</DependentUpon>
@@ -105,6 +110,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Views\ViewExplorer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\ViewTitlebar.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

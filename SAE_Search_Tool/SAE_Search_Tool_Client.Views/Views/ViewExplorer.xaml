@@ -1,0 +1,224 @@
+﻿<UserControl x:Class="SAE_Search_Tool_Client.Views.Views.ViewExplorer"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:SAE_Search_Tool_Client.Views.Views"
+             mc:Ignorable="d" 
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:logic="clr-namespace:SAE_Search_Tool_Client.Views.Logic"
+             DataContext="{x:Static logic:Datakernel.ExplorerVM}"
+             Background="White"
+             d:DesignHeight="450" 
+             d:DesignWidth="800">
+
+    <UserControl.Resources>
+        <Style TargetType="ListView">
+            <Setter Property="Background" Value="#F7F7F7"/>
+        </Style>
+
+        <DataTemplate x:Key="Template">
+            <StackPanel Orientation="Horizontal">
+                <Viewbox  VerticalAlignment="Center"/>
+                <ListViewItem Content="{Binding Path}" VerticalAlignment="Center"/>
+            </StackPanel>
+        </DataTemplate>
+
+    </UserControl.Resources>
+
+    <Grid>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+
+        <Grid>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
+
+            <Button 
+                Grid.Column="0"
+                Content="Zurück"
+                Background="Transparent"
+                BorderThickness="0"
+                BorderBrush="Transparent"
+                Padding="16,8,16,8"
+                Command="{Binding ReturnPathCommand}">
+            </Button>
+
+            <TextBox 
+                Grid.Column="1"
+                Text="{Binding CurrentPath}"
+                Background="White" 
+                IsReadOnly="True"
+                Foreground="Gray"
+                Height="25"
+                Padding="6,0,0,0"
+                VerticalContentAlignment="Center"
+                BorderBrush="LightGray"
+                BorderThickness="1">
+
+            </TextBox>
+
+            <Button
+                Grid.Column="2"               
+                Content="Speichern"
+                Background="Transparent"
+                BorderThickness="0"
+                BorderBrush="Transparent"
+                Padding="16,8,16,8"
+                Command="{Binding SaveJsonCommand}">
+
+            </Button>
+
+
+        </Grid>
+
+
+        <Grid 
+            Grid.Row="1">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <!--Drives-->
+            <ListView BorderBrush="Transparent"
+                      Grid.Row="1"
+                      Grid.Column="0"
+                      Foreground="DarkSlateGray"
+                      FontSize="14"
+                      FontWeight="DemiBold"
+                      SelectedItem="{Binding SelectedDrive}"
+                      ItemsSource="{Binding Drives}">
+
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="SelectionChanged">
+                        <i:InvokeCommandAction Command="{Binding SelectedDriveChangedCommand}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+
+                <ListView.View>
+
+                    <GridView>
+
+                        <GridViewColumn Header="Laufwerke" Width="100"/>
+
+                    </GridView>
+
+                </ListView.View>
+            </ListView>
+
+            <Grid 
+                Grid.Row="1"
+                Grid.Column="1">
+
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+
+                <!--Directories-->
+                <ListView BorderBrush="Transparent"
+                  Grid.Row="0"
+                  Grid.Column="1"                  
+                  Foreground="DarkSlateGray"
+                  FontSize="14"
+                  FontWeight="DemiBold"
+                  SelectedItem="{Binding SelectedDirectory}"
+                  ItemsSource="{Binding CurrentDriveDirectories}">
+
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="SelectionChanged">
+                            <i:InvokeCommandAction Command="{Binding SelectedDirectoryChangedCommand}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+
+                    <ListView.View>
+
+                        <GridView>
+                            <GridViewColumn 
+                            Header="Verzeichnisse"
+                            Width="auto"/>
+                        </GridView>
+
+                    </ListView.View>
+                </ListView>
+
+
+                <!--Files-->
+                <ListView 
+                    BorderBrush="Transparent"
+                    Grid.Row="1"
+                    Grid.Column="1"                  
+                    Foreground="DarkSlateGray"
+                    FontSize="14"
+                    FontWeight="DemiBold"     
+                    SelectedItem="{Binding SelectedDirectory}"
+                    ItemsSource="{Binding CurrentDriveFiles}">
+
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="SelectionChanged">
+                            <i:InvokeCommandAction Command="{Binding SelectedFileChangedCommand}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+
+                    <ListView.View>
+
+                        <GridView>
+                            <GridViewColumn 
+                            Header="Dateien"
+                            Width="auto"/>
+                        </GridView>
+
+                    </ListView.View>
+                </ListView>
+
+            </Grid>
+
+
+            <!--Selected Files-->
+            <ListView 
+                Grid.Row="1"
+                Grid.Column="2"
+                BorderBrush="Transparent"
+                Foreground="DarkSlateGray"
+                FontSize="14"
+                FontWeight="DemiBold"
+                SelectedItem="{Binding RemoveItem}"
+                ItemsSource="{Binding SelectedFiles}">
+
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="SelectionChanged">
+                        <i:InvokeCommandAction Command="{Binding SelectedFilesRemoveCommand}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn 
+                        Header="Ausgewählte Dateien"                        
+                        Width="auto">
+                        </GridViewColumn>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+
+        </Grid>
+
+    </Grid>
+
+</UserControl>

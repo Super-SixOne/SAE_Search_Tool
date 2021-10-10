@@ -15,16 +15,7 @@ namespace SAE_Search_Tool_Client.Views
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-            
-            string pfad = Datakernel.MainVM.SelectedDirectory;
-
-            ObservableCollection<string> files =  Datakernel.MainVM.SelectedFiles;
-            Datakernel.MainVM.GetAllFiles();
-
-        }
+        public virtual void OnPropertyChanged([CallerMemberName] string propertyName = null) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 
         protected virtual bool SetProperty<T>(ref T field, T value, [CallerMemberName] string propertyName = null)
         {

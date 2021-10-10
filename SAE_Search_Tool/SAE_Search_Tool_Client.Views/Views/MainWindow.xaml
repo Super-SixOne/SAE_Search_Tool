@@ -8,6 +8,8 @@
         xmlns:uc="clr-namespace:SAE_Search_Tool_Client.Views"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         WindowStartupLocation="CenterScreen"
+        xmlns:vms="clr-namespace:SAE_Search_Tool_Client.Views.ViewModels"
+        xmlns:views="clr-namespace:SAE_Search_Tool_Client.Views.Views"
         WindowStyle="None"
         AllowsTransparency="True"
         Background="#FAFAFB"
@@ -22,9 +24,14 @@
 
     <Window.Resources>
 
-        <DataTemplate x:Key="ViewDirectories"
-                      DataType="{x:Type uc:MainViewModel}">
+        <!--<DataTemplate x:Key="ViewDirectories"
+                      DataType="{x:Type vms:DirectoriesViewModel}">
             <uc:ViewDirectories/>
+        </DataTemplate>-->
+        
+        <DataTemplate x:Key="ViewExplorer"
+                      DataType="{x:Type vms:ExplorerViewModel}">
+            <views:ViewExplorer/>
         </DataTemplate>
 
     </Window.Resources>
@@ -47,32 +54,19 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
-
-
         <uc:ViewTitlebar Grid.Row="0" Grid.Column="1"/>
 
-        <Canvas Background="DodgerBlue"
-                Grid.Row="0"
-                Grid.Column="0">
-
-            <Label Content="SeJeDoSt"
-                   Visibility="Collapsed"
-                   Foreground="White"
-                   HorizontalAlignment="Center"
-                   FontWeight="DemiBold"
-                   FontSize="18"
-                   Margin="32,0,0,0">
-            </Label>
-
+        <Canvas 
+            Background="DodgerBlue"
+            Grid.Row="0"
+            Grid.Column="0">
         </Canvas>
-
-
 
         <uc:ViewDashboard 
             Grid.Row="1"
             Grid.RowSpan="2"
             Grid.Column="0"/>
-        
+
         <ContentControl 
             Grid.Row="1"
             Grid.Column="1"
@@ -82,8 +76,7 @@
 
                 <Style TargetType="{x:Type ContentControl}">
                     <Setter Property="ContentTemplate" 
-                            Value="{StaticResource 
-                        ViewDirectories}" />
+                            Value="{StaticResource ViewExplorer}" />
                     <Style.Triggers>
 
                         <DataTrigger 
@@ -92,8 +85,13 @@
 
                             <Setter 
                                 Property="ContentTemplate" 
-                                Value="{StaticResource ViewDirectories}">
+                                Value="{StaticResource ViewExplorer}">
                             </Setter>
+                            
+                            <!--<Setter 
+                                Property="ContentTemplate" 
+                                Value="{StaticResource ViewDirectories}">
+                            </Setter>-->
 
                         </DataTrigger>
 

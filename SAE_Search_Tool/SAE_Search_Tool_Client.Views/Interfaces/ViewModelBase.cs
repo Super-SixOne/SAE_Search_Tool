@@ -20,15 +20,9 @@ namespace SAE_Search_Tool_Client.Views
 
         #region methods: private
 
-        private void Close()
-        {
-            Application.Current.Shutdown();
-        }
+        private void Close() => Application.Current.Shutdown();
 
-        private void MoveWindow()
-        {
-            Application.Current.MainWindow.DragMove();
-        }
+        private void MoveWindow() => Application.Current.MainWindow.DragMove();
 
         #endregion methods: private
 

@@ -1,4 +1,5 @@
 ﻿using GalaSoft.MvvmLight.Command;
+using SAE_Search_Tool_Client.Views.Logic;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -11,71 +12,38 @@ using System.Windows.Input;
 
 namespace SAE_Search_Tool_Client.Views
 {
-    class DashboardViewModel : ViewModelBase
+    public class DashboardViewModel : ViewModelBase
     {
-        #region properties: public
+        #region ctor
 
-        public string CurrentDirectory
-        {
-            get => _currentDirectory;
-            set => SetProperty(ref _currentDirectory, value);
-        }
+        public DashboardViewModel() { }
 
-        public ObservableCollection<string> Drives
-        {
-            get => _drives;
-            set => SetProperty(ref _drives, value);
-        }
-
-        public ObservableCollection<string> Directories
-        {
-            get => _directories;
-            set => SetProperty(ref _directories, value);
-        }
-
-        #endregion properties: public
-
-        public DashboardViewModel()
-        {
-
-        }
-
-        #region commands: public
-
-        public ICommand LoadDirectoriesCommand
-        {
-            get
-            {
-                if (_loadDirectories == null)
-                {
-                    _loadDirectories = new RelayCommand(ScanDirectories);
-                }
-                return _loadDirectories;
-            }
-        }
-        public ICommand LoadDrivesCommand => _loadDrivesCommand = _loadDrivesCommand ?? new RelayCommand(ScanDirectories);
-
-        #endregion commands: public
+        #endregion ctor
 
 
+        #region Commands: public
+
+        public ICommand LoadDrivesCommand => _loadDrivesCommand = _loadDrivesCommand ?? new RelayCommand(ScanDrives);
+
+        #endregion Commands: public
+
+
+        private void ScanDrives() => Datakernel.ExplorerVM.Drives = new ObservableCollection<string>(Directory.GetLogicalDrives().ToList());
+        //private void ScanDrives() => Datakernel.DirectoriesVM.Drives = new ObservableCollection<string>(Directory.GetLogicalDrives().ToList());
+        
 
         #region methods: private
 
         private void ScanDirectories()
         {
-            // Pfad zur exe -> Pfad für Json
-
-            CurrentDirectory = Directory.GetCurrentDirectory();
-
-
             // Alle Laufwerke
-            Drives = new ObservableCollection<string>(Directory.GetLogicalDrives().ToList());
+            Datakernel.DirectoriesVM.Drives = new ObservableCollection<string>(Directory.GetLogicalDrives().ToList());
 
             // Infos der Laufwerke ermitteln
             DriveInfo info = null;
             string driveName = string.Empty;
 
-            foreach (string drive in Drives)
+            foreach (string drive in Datakernel.DirectoriesVM.Drives)
             {
                 info = new DriveInfo(drive);
                 driveName = info.Name;
@@ -103,23 +71,7 @@ namespace SAE_Search_Tool_Client.Views
         #endregion methods: private
 
 
-
-        #region properties: private
-
-        private string _currentDirectory;
-
-        private ObservableCollection<string> _drives;
-
-        private ObservableCollection<string> _directories;
-
-
-        #endregion properties: private
-
-
-
         #region commands: private
-
-        private ICommand _loadDirectories;
 
         private ICommand _loadDrivesCommand;
 
