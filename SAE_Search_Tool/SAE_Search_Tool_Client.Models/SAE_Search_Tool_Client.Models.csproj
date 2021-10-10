@@ -79,7 +79,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BusinessLogic\JsonCreation.cs" />
+    <Compile Include="BusinessLogic\JsonParser.cs" />
     <Compile Include="BusinessLogic\Models\FileReaderResult.cs" />
     <Compile Include="DataAccess\DbAccess.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
