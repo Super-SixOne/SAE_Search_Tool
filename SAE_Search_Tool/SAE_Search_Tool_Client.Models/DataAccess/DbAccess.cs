@@ -8,6 +8,9 @@ using System.Data;
 using System.Threading.Tasks;
 using System.Collections.ObjectModel;
 using SAE_Search_Tool_Client.Models.BusinessLogic;
+using Npgsql;
+using System.Collections.Generic;
+using System.Text;
 
 namespace SAE_Search_Tool_Client.Models.DataAccess
 {
