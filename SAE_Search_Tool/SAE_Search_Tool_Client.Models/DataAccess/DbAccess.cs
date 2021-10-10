@@ -1,13 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Text;
-using System.Data.SqlClient;
-using System.Data.SqlTypes;
-using System.Data;
-using System.Threading.Tasks;
-using System.Collections.ObjectModel;
-using SAE_Search_Tool_Client.Models.BusinessLogic;
 using SAE_Search_Tool_Client.Models.BusinessLogic.Models;
 using Npgsql;
 
