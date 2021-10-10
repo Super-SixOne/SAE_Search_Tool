@@ -18,6 +18,13 @@ namespace SAE_Search_Tool_Sync_Service
             while (true)
             {
                 IList<string> paths = JsonParser.GetSearchPaths();
+
+                if(paths is null)
+                {
+                    Thread.Sleep(Convert.ToInt32(ConfigurationManager.AppSettings["downtime"]));
+                    continue;
+                }
+
                 IList<FileReaderResult> resultsNew = new List<FileReaderResult>();
                 IList<FileReaderResult> resultsOld = DbAccess.GetResults();
 

@@ -27,20 +27,26 @@ namespace SAE_Search_Tool_Client.Models.BusinessLogic
 
         public static IList<string> GetSearchPaths()
         {
-            string json = string.Empty;
-
-            if (!File.Exists("C:\\ProgramData\\JsonConfig.json"))
+            try
             {
-                File.Create("C:\\ProgramData\\JsonConfig.json");
-            }
+                string json = string.Empty;
 
-            using (StreamReader reader = new StreamReader("C:\\ProgramData\\JsonConfig.json"))
+                if (!File.Exists("C:\\ProgramData\\JsonConfig.json"))
+                {
+                    File.Create("C:\\ProgramData\\JsonConfig.json");
+                }
+
+                using (StreamReader reader = new StreamReader("C:\\ProgramData\\JsonConfig.json"))
+                {
+                    json = reader.ReadToEnd();
+                }
+
+                return JsonConvert.DeserializeObject<List<string>>(json);
+            }
+            catch (Exception)
             {
-                json = reader.ReadToEnd();
+                return null;
             }
-
-            return JsonConvert.DeserializeObject<List<string>>(json);
         }
-
     }
 }
