@@ -34,7 +34,12 @@ namespace SAE_Search_Tool_Sync_Service
                     if (File.Exists(path)) 
                     {
                         FileReader fr = new FileReader();
-                        resultsNew.Add(new FileReaderResult(path, fr.GetContent(path)));
+                        string content = fr.GetContent(path);
+                        if (String.IsNullOrEmpty(content))
+                        {
+                            continue;
+                        }
+                        resultsNew.Add(new FileReaderResult(path, content));
                     }
                 }
 
