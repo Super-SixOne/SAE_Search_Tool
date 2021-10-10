@@ -63,6 +63,13 @@ namespace SAE_Search_Tool_Client.Views.ViewModels
 
         public List<string> CurrentPathTimeline { get => _currentPathTimeline; set => SetProperty(ref _currentPathTimeline, value); }
 
+        /// <summary>
+        /// PropertyBinding -> select all files CheckBox
+        /// </summary>
+        public bool AllFilesChecked { get => _allFilesChecked; set => SetProperty(ref _allFilesChecked, value); }
+
+        public bool ResetSelectedFilesChecked { get => _resetSelectedFilesChecked; set => SetProperty(ref _resetSelectedFilesChecked, value); }
+
         private void GetPrevious()
         {
             if (CurrentPathTimeline.Count > 0)
@@ -95,10 +102,64 @@ namespace SAE_Search_Tool_Client.Views.ViewModels
             }
         }
 
+        private void AddAllFiles()
+        {
+            if (AllFilesChecked)
+            {
+                foreach (string file in CurrentDriveFiles)
+                {
+                    if (!SelectedFiles.Contains(file))
+                    {
+                        SelectedFiles.Add(file);
+                    }
+                }
+                CurrentDriveFiles.Clear();
+            }
+            else
+            {
+                foreach (string file in SelectedFiles)
+                {
+                    if (file.Contains(CurrentPath))
+                    {
+                        CurrentDriveFiles.Add(file);
+                    }
+                }
+
+                foreach (string file in CurrentDriveFiles)
+                {
+                    if (SelectedFiles.Contains(file))
+                    {
+                        SelectedFiles.Remove(file);
+                    }
+                }
+            }
+
+        }
+
+        private void ResetAllFiles()
+        {
+            foreach (string file in SelectedFiles)
+            {
+                string res1 = Path.GetDirectoryName(file);
+                string res2 = Path.GetDirectoryName(CurrentPath);
+
+                if (Path.GetDirectoryName(file).Equals(CurrentPath))
+                {
+                    CurrentDriveFiles.Add(file);
+                }
+            }
+
+            AllFilesChecked = false;
+            SelectedFiles.Clear();
+        }
 
         #region Commands
 
         public ICommand ReturnPathCommand => _returnPathCommand = _returnPathCommand ?? new RelayCommand(GetPrevious);
+
+        public ICommand AddAllFilesCommand => _addAllFilesCommand = _addAllFilesCommand ?? new RelayCommand(AddAllFiles);
+
+        public ICommand ResetAllFilesCommand => _resetAllFilesCommand = _resetAllFilesCommand ?? new RelayCommand(ResetAllFiles);
 
         public ICommand SelectedDriveChangedCommand => _selectedDriveChangedCommand = _selectedDriveChangedCommand ?? new RelayCommand(GetDriveContent);
 
@@ -165,6 +226,19 @@ namespace SAE_Search_Tool_Client.Views.ViewModels
             {
             }
 
+            if (SelectedFiles != null)
+            {
+                foreach (string selItem in SelectedFiles)
+                {
+                    if (CurrentDriveFiles.Contains(selItem))
+                    {
+                        CurrentDriveFiles.Remove(selItem);
+                    }
+                }
+
+            }
+            AllFilesChecked = false;
+
         }
 
         private void AddFileToSelectedFiles()
@@ -187,15 +261,15 @@ namespace SAE_Search_Tool_Client.Views.ViewModels
                 return;
             }
 
-            if (RemoveItem.Contains(CurrentPath))
+            if (Path.GetDirectoryName(RemoveItem).Equals(CurrentPath))
             {
                 CurrentDriveFiles.Add(RemoveItem);
             }
 
             SelectedFiles.Remove(RemoveItem);
-
-
+            AllFilesChecked = false;
         }
+
 
         private void SaveJsonFile()
         {
@@ -230,12 +304,17 @@ namespace SAE_Search_Tool_Client.Views.ViewModels
         private string _currentPath;
         private List<string> _currentPathTimeline = new List<string>();
 
+        private bool _allFilesChecked = false;
+        private bool _resetSelectedFilesChecked = false;
+
         #endregion properties: private
 
 
         #region commands: private
 
         private ICommand _returnPathCommand;
+        private ICommand _addAllFilesCommand;
+        private ICommand _resetAllFilesCommand;
 
         private ICommand _selectedDriveChangedCommand;
         private ICommand _selectedDirectoryChangedCommand;

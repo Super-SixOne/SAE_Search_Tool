@@ -16,6 +16,8 @@ namespace SAE_Search_Tool_Client.Views.Logic
 
         public static DashboardViewModel DashboardViewModel = _dashboardVM = _dashboardVM ?? new DashboardViewModel();
 
+        public static SearchResultsViewModel SearchResultsVM = _searchResultsVM = _searchResultsVM ?? new SearchResultsViewModel();
+
         public static TitelbarViewModel TitelbarViewModel = _titelbarViewModel = _titelbarViewModel ?? new TitelbarViewModel();
 
         public static DirectoriesViewModel DirectoriesVM = _directoriesVM = _directoriesVM ?? new DirectoriesViewModel();
@@ -30,6 +32,8 @@ namespace SAE_Search_Tool_Client.Views.Logic
         private static MainViewModel _mainVM;
 
         private static DashboardViewModel _dashboardVM;
+
+        private static SearchResultsViewModel _searchResultsVM;
 
         private static DirectoriesViewModel _directoriesVM;
 

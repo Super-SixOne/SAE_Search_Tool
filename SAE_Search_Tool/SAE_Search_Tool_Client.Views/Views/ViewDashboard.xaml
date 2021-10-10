@@ -46,7 +46,7 @@
                     BorderThickness="6,0,0,0"
                     BorderBrush="DodgerBlue"
                     Style="{StaticResource Button_Dashboard}"
-                    Command="{Binding SwitchViewCommand}"
+                    Command="{Binding ShowViewSearchResultsCommand}"
                     Width="auto">
                 </Button>
 

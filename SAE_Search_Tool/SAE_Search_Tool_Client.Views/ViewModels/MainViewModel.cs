@@ -18,14 +18,6 @@ namespace SAE_Search_Tool_Client.Views
 
         public int CurrentView { get; set; }
 
-        /// <summary>
-        /// Viewansichten
-        /// </summary>
-        public enum Views
-        {
-            ViewDirectory,
-        }
-
         public int SwitchView
         {
             get => _switchView;

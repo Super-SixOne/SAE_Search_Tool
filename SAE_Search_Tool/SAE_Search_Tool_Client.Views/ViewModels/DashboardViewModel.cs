@@ -25,12 +25,21 @@ namespace SAE_Search_Tool_Client.Views
 
         public ICommand LoadDrivesCommand => _loadDrivesCommand = _loadDrivesCommand ?? new RelayCommand(ScanDrives);
 
+        public ICommand ShowViewSearchResultsCommand => _showViewSearchResultsCommand = _showViewSearchResultsCommand ?? new RelayCommand(S);
+
+        private void S()
+        {
+            Datakernel.MainVM.SwitchView = 1;
+        }
+
         #endregion Commands: public
 
 
-        private void ScanDrives() => Datakernel.ExplorerVM.Drives = new ObservableCollection<string>(Directory.GetLogicalDrives().ToList());
-        //private void ScanDrives() => Datakernel.DirectoriesVM.Drives = new ObservableCollection<string>(Directory.GetLogicalDrives().ToList());
-        
+        private void ScanDrives()
+        {
+            Datakernel.ExplorerVM.Drives = new ObservableCollection<string>(Directory.GetLogicalDrives().ToList());
+            Datakernel.MainVM.SwitchView = 0;
+        }
 
         #region methods: private
 
@@ -74,6 +83,7 @@ namespace SAE_Search_Tool_Client.Views
         #region commands: private
 
         private ICommand _loadDrivesCommand;
+        private ICommand _showViewSearchResultsCommand;
 
         #endregion commands: private
 
