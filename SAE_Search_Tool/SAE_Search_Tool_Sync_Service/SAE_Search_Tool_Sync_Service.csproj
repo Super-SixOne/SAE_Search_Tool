@@ -87,11 +87,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Logic\DataAccess\DbAccess.cs" />
     <Compile Include="Logic\FileReader.cs" />
     <Compile Include="Logic\FileSync.cs" />
-    <Compile Include="Logic\JsonParser.cs" />
-    <Compile Include="Logic\Models\FileReaderResult.cs" />
     <Compile Include="ProjectInstaller.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -116,6 +113,11 @@
       <DependentUpon>ProjectInstaller.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\SAE_Search_Tool_Client.Models\SAE_Search_Tool_Client.Models.csproj">
+      <Project>{e17da08e-9919-494a-9acb-591f6c207aa7}</Project>
+      <Name>SAE_Search_Tool_Client.Models</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

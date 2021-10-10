@@ -1,6 +1,7 @@
 ﻿using SAE_Search_Tool_Sync_Service.Logic;
-using SAE_Search_Tool_Sync_Service.Logic.DataAccess;
-using SAE_Search_Tool_Sync_Service.Logic.Models;
+using SAE_Search_Tool_Client.Models.DataAccess;
+using SAE_Search_Tool_Client.Models.BusinessLogic.Models;
+using SAE_Search_Tool_Client.Models.BusinessLogic;
 using System;
 using System.Collections.Generic;
 using System.Configuration;

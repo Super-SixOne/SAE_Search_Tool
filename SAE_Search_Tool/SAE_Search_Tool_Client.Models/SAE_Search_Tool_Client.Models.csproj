@@ -80,8 +80,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BusinessLogic\JsonCreation.cs" />
-    <Compile Include="BusinessLogic\DatabaseAccess.cs" />
-    <Compile Include="BusinessLogic\SearchResult.cs" />
+    <Compile Include="BusinessLogic\Models\FileReaderResult.cs" />
     <Compile Include="DataAccess\DbAccess.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

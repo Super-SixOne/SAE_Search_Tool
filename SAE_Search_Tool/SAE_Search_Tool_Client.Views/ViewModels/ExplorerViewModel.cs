@@ -201,7 +201,7 @@ namespace SAE_Search_Tool_Client.Views.ViewModels
         {
             if (Datakernel.ExplorerVM.SelectedFiles != null && Datakernel.ExplorerVM.SelectedFiles.Count > 0)
             {
-                JsonCreation.UpdateJson(Datakernel.ExplorerVM.SelectedFiles);
+                JsonParser.WriteSearchPaths(Datakernel.ExplorerVM.SelectedFiles);
             }
             else
             {

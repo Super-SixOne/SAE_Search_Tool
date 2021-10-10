@@ -8,113 +8,132 @@ using System.Data;
 using System.Threading.Tasks;
 using System.Collections.ObjectModel;
 using SAE_Search_Tool_Client.Models.BusinessLogic;
+using SAE_Search_Tool_Client.Models.BusinessLogic.Models;
 using Npgsql;
-using System.Collections.Generic;
-using System.Text;
 
 namespace SAE_Search_Tool_Client.Models.DataAccess
 {
-    internal sealed class DBAccess
+    /// <summary>
+    /// Responsible for handling database connection and communication.
+    /// </summary>
+    public static class DbAccess
     {
-        #region methods: public
+        public static string ConnectionString = "Server=10.194.9.131;Port=5432;Database=myDataBase;User Id=postgres;Password=Vahpeiwoqu1Haex4cem6;";
+        public static string TableName = "table_name";
 
-        public static DBAccess GetInstance()
+        public static void InsertData(IList<FileReaderResult> data)
         {
-            if (_db == null)
+            using (NpgsqlConnection connection = new NpgsqlConnection(DbAccess.ConnectionString))
             {
-                _db = new DBAccess();
-            }
-            return _db;
-        }
+                connection.Open();
 
-        public void OpenSqlConnection()
-        {
-            SetSqlConnectionSettings();
+                StringBuilder commandString = new StringBuilder($"INSERT INTO {DbAccess.TableName} (path, content, hash) VALUES (");
 
-            using (SqlConnection connection = new SqlConnection(_connectionString))
-            {
-                // Create the Command and Parameter objects.
-                SqlCommand command = new SqlCommand(_queryString, connection);
-                command.Parameters.AddWithValue("@Text", _paramValue);
-
-                // Open the connection in a try/catch block.
-                // Create and execute the DataReader, writing the result
-                try
+                for (int i = 0; i < data.Count; i++)
                 {
-                    connection.Open();
-                    SqlDataReader reader = command.ExecuteReader();
-                    SqlDataAdapter adapter = new SqlDataAdapter(command);
+                    for (int j = 0; j < 3; j++)
+                    {
+                        commandString.Append($"@p{i}{j}");
+                        if (j + 1 < 3)
+                        {
+                            commandString.Append(",");
+                        }
+                    }
 
-                    DataTable dataTable = new DataTable();
-
-                    adapter.Fill(dataTable);
-
-                    //List<DBAccess> DBList = new List<DBAccess>();
-                    //for (int i = 0; i < _dataTable.Rows.Count; i++)
-                    //{
-                        /// aus Tabelle eine Liste machen (falls nötig)
-
-                    //}
+                    commandString.Append(")");
+                    if (i + 1 < data.Count)
+                    {
+                        commandString.Append(",");
+                    }
                 }
 
-                catch (Exception ex)
+                commandString.Append(")");
+
+                using (NpgsqlCommand command = new NpgsqlCommand(commandString.ToString(), connection))
                 {
-                    // TODO Marc logging -> Logfile erstellen (Übung, falls wir noch genug Zeit haben) -> Passenden Namen für die Logdatei ausdenken
-                    Console.WriteLine(ex.Message); // Msg.Box.Show(ex.Message)
+                    int i = 0;
+                    foreach (FileReaderResult result in data)
+                    {
+                        command.Parameters.AddWithValue($"p{i}{0}", result.Path);
+                        command.Parameters.AddWithValue($"p{i}{1}", result.Path);
+                        command.Parameters.AddWithValue($"p{i}{2}", result.Path);
+                    }
+
+                    command.ExecuteNonQuery();
                 }
             }
         }
 
-        #endregion methods: public
-
-
-        #region ctor
-
-        // Singleton
-        private DBAccess()
+        public static void DeleteData(IList<FileReaderResult> data)
         {
-
-        }
-
-        #endregion ctor
-
-
-        #region methods: private
-
-        // Temp Solution until we put connection string into settings file.
-        private void SetSqlConnectionSettings()
-        {
-            if (Equals(_connectionString, string.Empty))
+            using (NpgsqlConnection connection = new NpgsqlConnection(DbAccess.ConnectionString))
             {
-                _connectionString =
-                    "User ID = postgres; Password = schumi1997; Server = localhost; Port = 5432; Database = DB_searchtool; "
-                    + "Integrated Security = true;";
-            }
+                connection.Open();
 
-            if (Equals(_queryString, string.Empty))
-            {
-                _queryString =
-                    "SELECT * from DB_searchtooldb. "
-                        + "select * from public.\"SearchTable\"where to_tsvector(\"Text\") @@ to_tsquery('Lorem'); "
-                        + "ORDER BY ;";
+                StringBuilder commandString = new StringBuilder($"DELETE FROM {DbAccess.TableName} WHERE hash IN (");
+
+                for (int i = 0; i < data.Count; i++)
+                {
+                    commandString.Append($"@p{i}");
+                    if (i + 1 < data.Count)
+                    {
+                        commandString.Append(",");
+                    }
+                }
+
+                commandString.Append(")");
+
+                using (NpgsqlCommand command = new NpgsqlCommand(commandString.ToString(), connection))
+                {
+                    int i = 0;
+                    foreach (FileReaderResult result in data)
+                    {
+                        command.Parameters.AddWithValue($"p{i}", result.SHA512);
+                    }
+
+                    command.ExecuteNonQuery();
+                }
             }
         }
 
-        #endregion methods: private
+        public static void UpdateDatabaseEntries(IList<FileReaderResult> data)
+        {
+            using (NpgsqlConnection connection = new NpgsqlConnection(DbAccess.ConnectionString))
+            {
+                connection.Open();
 
+                StringBuilder commandString = new StringBuilder($"UPDATE {DbAccess.TableName} SET hash = ");
 
-        #region members: private
+                foreach (FileReaderResult result in data)
+                {
+                    commandString.Append($"@p0, content = @p1 WHERE path = @p2");
 
-        // Das ist die einzige globale Instanz
-        private static DBAccess _db = null;
+                    using (NpgsqlCommand command = new NpgsqlCommand(commandString.ToString(), connection))
+                    {
+                        command.Parameters.AddWithValue("p0", result.SHA512);
+                        command.Parameters.AddWithValue("p1", result.Content);
+                        command.Parameters.AddWithValue("p2", result.Path);
 
-        // private, damit sie nicht von Außen verändert werden können
-        private string _connectionString = string.Empty;
-        private string _queryString = string.Empty;
-        private string _paramValue = "Kommt von der Oberfläche";
+                        command.ExecuteNonQuery();
+                    }
+                }
+            }
+        }
 
-        #endregion members: private
+        /// <summary>
+        /// Gets all data in the database as <see cref="FileReaderResult"/> objects.
+        /// </summary>
+        /// <returns>A list of <see cref="FileReaderResult"/> objects.</returns>
+        public static IList<FileReaderResult> GetResults()
+        {
+            //TODO: Logic Select *
+            return new List<FileReaderResult>();
+        }
 
+        public static IList<FileReaderResult> GetResults(string searchPattern)
+        {
+            //TODO: Logic
+            return new List<FileReaderResult>();
+        }
     }
-
 }

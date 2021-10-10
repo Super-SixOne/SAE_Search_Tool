@@ -2,21 +2,18 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Collections.ObjectModel;
 
 namespace SAE_Search_Tool_Client.Models.BusinessLogic
 {
-    public static class JsonCreation
+    public static class JsonParser
     {
        
-        public static void UpdateJson(ObservableCollection<string> FileInput)
+        public static void WriteSearchPaths(ObservableCollection<string> fileInput)
         {
 
-            string jsonName = "JsonConfig.Json";
-            string json = JsonConvert.SerializeObject(FileInput);
+            string jsonName = "JsonConfig.json";
+            string json = JsonConvert.SerializeObject(fileInput);
             string CurrentDirectory = "C:\\ProgramData\\";
             try
             {
@@ -27,6 +24,18 @@ namespace SAE_Search_Tool_Client.Models.BusinessLogic
 
                 throw;
             }
+        }
+
+        public static IList<string> GetSearchPaths()
+        {
+            string json = string.Empty;
+
+            using (StreamReader reader = new StreamReader("C:\\ProgramData\\JsonConfig.json"))
+            {
+                json = reader.ReadToEnd();
+            }
+
+            return JsonConvert.DeserializeObject<List<string>>(json);
         }
 
     }
