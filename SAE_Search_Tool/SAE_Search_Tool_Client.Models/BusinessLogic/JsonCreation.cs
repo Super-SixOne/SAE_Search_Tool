@@ -29,6 +29,11 @@ namespace SAE_Search_Tool_Client.Models.BusinessLogic
         {
             string json = string.Empty;
 
+            if (!File.Exists("C:\\ProgramData\\JsonConfig.json"))
+            {
+                File.Create("C:\\ProgramData\\JsonConfig.json");
+            }
+
             using (StreamReader reader = new StreamReader("C:\\ProgramData\\JsonConfig.json"))
             {
                 json = reader.ReadToEnd();
