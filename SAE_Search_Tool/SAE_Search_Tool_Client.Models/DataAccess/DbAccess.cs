@@ -12,7 +12,7 @@ namespace SAE_Search_Tool_Client.Models.DataAccess
     {
         public static string ConnectionString = "Server=10.194.9.131;Port=5432;Database=myDataBase;User Id=postgres;Password=Vahpeiwoqu1Haex4cem6;";
         public static string TableName = "table_name";
-
+        
         public static void InsertData(IList<FileReaderResult> data)
         {
             using (NpgsqlConnection connection = new NpgsqlConnection(DbAccess.ConnectionString))
@@ -118,8 +118,25 @@ namespace SAE_Search_Tool_Client.Models.DataAccess
         /// <returns>A list of <see cref="FileReaderResult"/> objects.</returns>
         public static IList<FileReaderResult> GetResults()
         {
-            //TODO: Logic Select *
-            return new List<FileReaderResult>();
+            IList<FileReaderResult> results = new List<FileReaderResult>();
+
+            using (NpgsqlConnection connection = new NpgsqlConnection(DbAccess.ConnectionString))
+            {
+                connection.Open();
+
+                using (NpgsqlCommand command = new NpgsqlCommand($"SELECT * FROM {DbAccess.TableName}", connection))
+                {
+                    using (NpgsqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            results.Add(new FileReaderResult(reader.GetString(0), reader.GetString(1), reader.GetString(2)));
+                        }
+                    }
+                }
+            }
+
+            return results;
         }
 
         public static IList<FileReaderResult> GetResults(string searchPattern)
