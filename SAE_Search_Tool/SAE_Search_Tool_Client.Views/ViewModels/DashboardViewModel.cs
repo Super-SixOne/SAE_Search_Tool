@@ -12,22 +12,26 @@ using System.Windows.Input;
 
 namespace SAE_Search_Tool_Client.Views
 {
+    /// <summary>
+    /// ViewModel -> ViewDasboard
+    /// </summary>
     public class DashboardViewModel : ViewModelBase
     {
+
+        #region Commands: public
+
+        public ICommand LoadDrivesCommand => _loadDrivesCommand = _loadDrivesCommand ?? new RelayCommand(ScanDrives);
+
+        public ICommand ShowViewSearchResultsCommand => _showViewSearchResultsCommand = _showViewSearchResultsCommand ?? new RelayCommand(ShowViewResults);
+
+
         #region ctor
 
         public DashboardViewModel() { }
 
         #endregion ctor
 
-
-        #region Commands: public
-
-        public ICommand LoadDrivesCommand => _loadDrivesCommand = _loadDrivesCommand ?? new RelayCommand(ScanDrives);
-
-        public ICommand ShowViewSearchResultsCommand => _showViewSearchResultsCommand = _showViewSearchResultsCommand ?? new RelayCommand(S);
-
-        private void S()
+        private void ShowViewResults()
         {
             Datakernel.MainVM.SwitchView = 1;
         }

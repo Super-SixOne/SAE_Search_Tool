@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace SAE_Search_Tool_Client.Views.Logic
 {
+    /// <summary>
+    /// Communication interface
+    /// </summary>
     public static class Datakernel
     {
         #region Properties

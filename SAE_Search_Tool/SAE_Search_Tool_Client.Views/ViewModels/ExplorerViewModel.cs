@@ -68,7 +68,15 @@ namespace SAE_Search_Tool_Client.Views.ViewModels
         /// </summary>
         public bool AllFilesChecked { get => _allFilesChecked; set => SetProperty(ref _allFilesChecked, value); }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public bool ResetSelectedFilesChecked { get => _resetSelectedFilesChecked; set => SetProperty(ref _resetSelectedFilesChecked, value); }
+
+        /// <summary>
+        /// Property-Binding Save Button IsEnabled
+        /// </summary>
+        public bool SaveButtonEnabled { get => _saveButtonEnabled; set => SetProperty(ref _saveButtonEnabled, value); }
 
         private void GetPrevious()
         {
@@ -104,6 +112,11 @@ namespace SAE_Search_Tool_Client.Views.ViewModels
 
         private void AddAllFiles()
         {
+            if (CurrentDriveFiles is null)
+            {
+                return;
+            }
+
             if (AllFilesChecked)
             {
                 foreach (string file in CurrentDriveFiles)
@@ -134,6 +147,7 @@ namespace SAE_Search_Tool_Client.Views.ViewModels
                 }
             }
 
+            SaveButtonEnabled = true;
         }
 
         private void ResetAllFiles()
@@ -150,6 +164,7 @@ namespace SAE_Search_Tool_Client.Views.ViewModels
             }
 
             AllFilesChecked = false;
+            SaveButtonEnabled = false;
             SelectedFiles.Clear();
         }
 
@@ -250,7 +265,7 @@ namespace SAE_Search_Tool_Client.Views.ViewModels
 
             SelectedFiles.Add(SelectedFile);
             CurrentDriveFiles.Remove(SelectedFile);
-
+            SaveButtonEnabled = true;
 
         }
 
@@ -268,6 +283,10 @@ namespace SAE_Search_Tool_Client.Views.ViewModels
 
             SelectedFiles.Remove(RemoveItem);
             AllFilesChecked = false;
+            if (SelectedFiles is null || SelectedFiles.Count() == 0)
+            {
+                SaveButtonEnabled = false;
+            }
         }
 
 
@@ -306,6 +325,7 @@ namespace SAE_Search_Tool_Client.Views.ViewModels
 
         private bool _allFilesChecked = false;
         private bool _resetSelectedFilesChecked = false;
+        private bool _saveButtonEnabled = false;
 
         #endregion properties: private
 

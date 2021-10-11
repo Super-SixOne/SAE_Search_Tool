@@ -7,23 +7,26 @@
              mc:Ignorable="d"
              xmlns:logic="clr-namespace:SAE_Search_Tool_Client.Views.Logic"
              DataContext="{x:Static logic:Datakernel.SearchResultsVM}"
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="450" 
+             d:DesignWidth="800">
     <Grid>
 
-        <!--Directories-->
+        <!--Path-->
         <ListView BorderBrush="Transparent"
                   Grid.Row="0"
                   Grid.Column="1"                  
                   Foreground="DarkSlateGray"
                   FontSize="14"
+                  ItemsSource="{Binding FileReaderResults}"
                   FontWeight="DemiBold">
 
             <ListView.View>
 
                 <GridView>
                     <GridViewColumn 
-                            Header="Suchergebnisse"
-                            Width="auto"/>
+                        DisplayMemberBinding="{ Binding Path}"
+                        Header="Suchergebnisse"
+                        Width="auto"/>
                 </GridView>
 
             </ListView.View>

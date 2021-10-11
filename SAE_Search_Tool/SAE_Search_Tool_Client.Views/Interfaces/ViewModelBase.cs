@@ -5,6 +5,9 @@ using System.Windows.Input;
 
 namespace SAE_Search_Tool_Client.Views
 {
+    /// <summary>
+    /// Base class what implements base commands and INotifyPropertyChanged 
+    /// </summary>
     public abstract class ViewModelBase : NotificationBase
     {
 

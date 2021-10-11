@@ -73,9 +73,40 @@
                 Background="DodgerBlue"
                 Foreground="White"
                 BorderThickness="0"
+                IsEnabled="{Binding SaveButtonEnabled}"
                 BorderBrush="Transparent"
                 Padding="16,8,16,8"
                 Command="{Binding SaveJsonCommand}">
+
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Style.Triggers>
+                            
+                            <Trigger 
+                                Value="True"
+                                Property="IsEnabled" >
+                                <Setter 
+                                    Value="DodgerBlue"
+                                    Property="Background">
+                                </Setter>
+                            </Trigger>
+                            
+                            <Trigger 
+                                Value="False"
+                                Property="IsEnabled" >
+                                <Setter 
+                                    Value="LightGray"
+                                    Property="Background">
+                                </Setter>
+                                <Setter 
+                                    Value="Gray"
+                                    Property="Foreground">
+                                </Setter>
+                            </Trigger>
+                            
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
 
             </Button>
 

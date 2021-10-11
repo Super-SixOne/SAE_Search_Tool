@@ -1,5 +1,6 @@
 ﻿using GalaSoft.MvvmLight.Command;
 using SAE_Search_Tool_Client.Models.BusinessLogic;
+using SAE_Search_Tool_Client.Models.DataAccess;
 using SAE_Search_Tool_Client.Views.Logic;
 using System;
 using System.Collections.Generic;
@@ -7,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Collections.ObjectModel;
 using System.Windows.Input;
 
 namespace SAE_Search_Tool_Client.Views
@@ -14,6 +16,11 @@ namespace SAE_Search_Tool_Client.Views
     public class TitelbarViewModel : ViewModelBase
     {
         #region properties: public
+
+        private string _searchWord;
+
+        public string SearchWord { get => _searchWord; set => SetProperty(ref _searchWord, value); }
+
 
         public ICommand StartSearchCommand => _startSearchCommand = _startSearchCommand ?? new RelayCommand(SearchWordInFiles);
 
@@ -49,13 +56,13 @@ namespace SAE_Search_Tool_Client.Views
 
         private void SearchWordInFiles()
         {
-            if (Datakernel.ExplorerVM.SelectedFiles != null && Datakernel.ExplorerVM.SelectedFiles.Count > 0)
+            if (!string.IsNullOrEmpty(SearchWord))
             {
-                JsonParser.WriteSearchPaths(Datakernel.ExplorerVM.SelectedFiles.ToList());
-            }
-            else
-            {
-                MessageBox.Show("Keine Dateien ausgewählt. Diese MessageBox wird ersetzt");
+                //List<Models.BusinessLogic.Models.FileReaderResult> res = DbAccess.GetResults(SearchWord).ToList();
+                Datakernel.SearchResultsVM.FileReaderResults = new ObservableCollection<Models.BusinessLogic.Models.FileReaderResult>(DbAccess.GetResults(SearchWord).ToList());
+
+                //Datakernel.SearchResultsVM.SearchResultPaths = new ObservableCollection<string>(DbAccess.GetResults(SearchWord).ToList().Select(p => p.Path));
+
             }
         }
 

@@ -10,6 +10,9 @@ using System.Threading.Tasks;
 
 namespace SAE_Search_Tool_Client.Views
 {
+    /// <summary>
+    /// INotifyPropertyChanged implementation
+    /// </summary>
     public abstract class NotificationBase : INotifyPropertyChanged
     {
 
