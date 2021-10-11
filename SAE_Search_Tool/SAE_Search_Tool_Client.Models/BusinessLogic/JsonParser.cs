@@ -7,7 +7,7 @@ namespace SAE_Search_Tool_Client.Models.BusinessLogic
 {
     public static class JsonParser
     {
-       
+
         public static void WriteSearchPaths(IList<string> fileInput)
         {
 

@@ -10,22 +10,22 @@ namespace SAE_Search_Tool_Client.Models.DataAccess
     /// </summary>
     public static class DbAccess
     {
-        public static string ConnectionString = "Server=10.194.9.131;Port=5432;Database=myDataBase;User Id=postgres;Password=Vahpeiwoqu1Haex4cem6;";
-        public static string TableName = "table_name";
-        
+        public static string ConnectionString = "Server=localhost;Port=5432;Database=postgres;User Id=postgres;Password=schumi1997;";
+        public static string TableName = "SearchTable";
+
         public static void InsertData(IList<FileReaderResult> data)
         {
             using (NpgsqlConnection connection = new NpgsqlConnection(DbAccess.ConnectionString))
             {
                 connection.Open();
 
-                StringBuilder commandString = new StringBuilder($"INSERT INTO {DbAccess.TableName} (path, content, hash) VALUES (");
+                StringBuilder commandString = new StringBuilder($"INSERT INTO public.\"{DbAccess.TableName}\" (path, content, hash) VALUES (");
 
                 for (int i = 0; i < data.Count; i++)
                 {
                     for (int j = 0; j < 3; j++)
                     {
-                        commandString.Append($"@p{i}{j}");
+                        commandString.Append($"\'@p{i}{j}\'");
                         if (j + 1 < 3)
                         {
                             commandString.Append(",");
@@ -35,11 +35,9 @@ namespace SAE_Search_Tool_Client.Models.DataAccess
                     commandString.Append(")");
                     if (i + 1 < data.Count)
                     {
-                        commandString.Append(",");
+                        commandString.Append(",(");
                     }
                 }
-
-                commandString.Append(")");
 
                 using (NpgsqlCommand command = new NpgsqlCommand(commandString.ToString(), connection))
                 {
@@ -47,8 +45,8 @@ namespace SAE_Search_Tool_Client.Models.DataAccess
                     foreach (FileReaderResult result in data)
                     {
                         command.Parameters.AddWithValue($"p{i}{0}", result.Path);
-                        command.Parameters.AddWithValue($"p{i}{1}", result.Path);
-                        command.Parameters.AddWithValue($"p{i}{2}", result.Path);
+                        command.Parameters.AddWithValue($"p{i}{1}", result.Content);
+                        command.Parameters.AddWithValue($"p{i}{2}", result.SHA512);
                     }
 
                     command.ExecuteNonQuery();
