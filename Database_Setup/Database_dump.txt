@@ -1,0 +1,10 @@
+-- Erstellung der Datenbank bitte als einzelne Zeile ausführen!
+Create Database DB_Searchtool
+;
+
+-- Erstellung der Tabelle
+Create Table SearchTable (
+path text not null,
+content text not null,
+hash text primary key not null )
+;

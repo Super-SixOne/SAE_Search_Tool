@@ -1,1 +1,0 @@
-Command for creating service: sc create FileSearchService binpath= "C:\Users\Dominik\Desktop\Projects\SAE_Search_Tool\SAE_Search_Tool\SAE_Search_Tool_Sync_Service\bin\Debug\SAE_Search_Tool_Sync_Service.exe"

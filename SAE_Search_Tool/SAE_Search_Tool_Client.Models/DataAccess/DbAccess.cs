@@ -10,7 +10,7 @@ namespace SAE_Search_Tool_Client.Models.DataAccess
     /// </summary>
     public static class DbAccess
     {
-        public static string ConnectionString = "Server=localhost;Port=5432;Database=postgres;User Id=postgres;Password=schumi1997;";
+        public static string ConnectionString = "Server=localhost;Port=5432;Database=DB_Searchtool;User Id=postgres;Password=;";
         public static string TableName = "SearchTable";
 
         /// <summary>
