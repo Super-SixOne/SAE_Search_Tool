@@ -72,6 +72,10 @@ namespace SAE_Search_Tool_Sync_Service
                     }
                 }
 
+                DbAccess.InsertData(inserts);
+                DbAccess.UpdateDatabaseEntries(updates);
+                DbAccess.DeleteData(deletes);
+
                 // Wait defined amount of milliseconds before syncing again.
                 Thread.Sleep(Convert.ToInt32(ConfigurationManager.AppSettings["downtime"]));
             }

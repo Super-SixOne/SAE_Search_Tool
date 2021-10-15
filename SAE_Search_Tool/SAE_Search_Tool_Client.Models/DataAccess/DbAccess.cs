@@ -13,6 +13,10 @@ namespace SAE_Search_Tool_Client.Models.DataAccess
         public static string ConnectionString = "Server=localhost;Port=5432;Database=postgres;User Id=postgres;Password=schumi1997;";
         public static string TableName = "SearchTable";
 
+        /// <summary>
+        /// Inserts a set of <see cref="FileReaderResult"/> objects into the database.
+        /// </summary>
+        /// <param name="data">The data to insert into the database.</param>
         public static void InsertData(IList<FileReaderResult> data)
         {
             using (NpgsqlConnection connection = new NpgsqlConnection(DbAccess.ConnectionString))
@@ -21,89 +25,78 @@ namespace SAE_Search_Tool_Client.Models.DataAccess
 
                 StringBuilder commandString = new StringBuilder($"INSERT INTO public.\"{DbAccess.TableName}\" (path, content, hash) VALUES (");
 
-                for (int i = 0; i < data.Count; i++)
+                foreach (FileReaderResult result in data)
                 {
-                    for (int j = 0; j < 3; j++)
+                    for (int i = 0; i < 3; i++)
                     {
-                        commandString.Append($"\'@p{i}{j}\'");
-                        if (j + 1 < 3)
-                        {
-                            commandString.Append(",");
-                        }
-                    }
+                        commandString.Append($"\'{result.Path}\',\'{result.Content}\',\'{result.SHA512})\'");
 
-                    commandString.Append(")");
-                    if (i + 1 < data.Count)
-                    {
-                        commandString.Append(",(");
+
+                        if (i + 1 < data.Count)
+                        {
+                            commandString.Append(",(");
+                        }
                     }
                 }
 
                 using (NpgsqlCommand command = new NpgsqlCommand(commandString.ToString(), connection))
                 {
-                    int i = 0;
-                    foreach (FileReaderResult result in data)
-                    {
-                        command.Parameters.AddWithValue($"p{i}{0}", result.Path);
-                        command.Parameters.AddWithValue($"p{i}{1}", result.Content);
-                        command.Parameters.AddWithValue($"p{i}{2}", result.SHA512);
-                    }
-
                     command.ExecuteNonQuery();
                 }
             }
         }
 
+        /// <summary>
+        /// Deletes a set of <see cref="FileReaderResult"/> objects in the database.
+        /// </summary>
+        /// <param name="data">The data to delete in the database.</param>
         public static void DeleteData(IList<FileReaderResult> data)
         {
             using (NpgsqlConnection connection = new NpgsqlConnection(DbAccess.ConnectionString))
             {
                 connection.Open();
 
-                StringBuilder commandString = new StringBuilder($"DELETE FROM {DbAccess.TableName} WHERE hash IN (");
+                StringBuilder commandString = new StringBuilder($"DELETE FROM {DbAccess.TableName} WHERE path IN (");
 
-                for (int i = 0; i < data.Count; i++)
+                int i = 0;
+                foreach(FileReaderResult result in data)
                 {
-                    commandString.Append($"@p{i}");
+                    commandString.Append($"\'{result.Path}\'");
                     if (i + 1 < data.Count)
                     {
                         commandString.Append(",");
                     }
+
+                    i++;
                 }
 
                 commandString.Append(")");
 
                 using (NpgsqlCommand command = new NpgsqlCommand(commandString.ToString(), connection))
                 {
-                    int i = 0;
-                    foreach (FileReaderResult result in data)
-                    {
-                        command.Parameters.AddWithValue($"p{i}", result.SHA512);
-                    }
-
                     command.ExecuteNonQuery();
                 }
             }
         }
 
+        /// <summary>
+        /// Updates a set of <see cref="FileReaderResult"/> objects in the database.
+        /// </summary>
+        /// <param name="data">The data to update in the database.</param>
         public static void UpdateDatabaseEntries(IList<FileReaderResult> data)
         {
             using (NpgsqlConnection connection = new NpgsqlConnection(DbAccess.ConnectionString))
             {
                 connection.Open();
 
-                StringBuilder commandString = new StringBuilder($"UPDATE {DbAccess.TableName} SET hash = ");
+                StringBuilder commandString = new StringBuilder($"UPDATE {DbAccess.TableName} SET content = ");
 
                 foreach (FileReaderResult result in data)
                 {
-                    commandString.Append($"@p0, content = @p1 WHERE path = @p2");
+                    commandString.Append($"\'{result.Content}\', hash = \'{result.SHA512}\' WHERE path = \'{result.Path}\'");
 
                     using (NpgsqlCommand command = new NpgsqlCommand(commandString.ToString(), connection))
                     {
-                        command.Parameters.AddWithValue("p0", result.SHA512);
-                        command.Parameters.AddWithValue("p1", result.Content);
-                        command.Parameters.AddWithValue("p2", result.Path);
-
                         command.ExecuteNonQuery();
                     }
                 }
@@ -137,6 +130,11 @@ namespace SAE_Search_Tool_Client.Models.DataAccess
             return results;
         }
 
+        /// <summary>
+        /// Gets a set of <see cref="FileReaderResult"/> objects from the database based on a given search string.
+        /// </summary>
+        /// <param name="searchString">The text for which to search for.</param>
+        /// <returns>A list of <see cref="FileReaderResult"/> objects.</returns>
         public static IList<FileReaderResult> GetResults(string searchString)
         {
             IList<FileReaderResult> results = new List<FileReaderResult>();
@@ -145,7 +143,7 @@ namespace SAE_Search_Tool_Client.Models.DataAccess
             {
                 connection.Open();
 
-                using (NpgsqlCommand command = new NpgsqlCommand($"SELECT * FROM {DbAccess.TableName} WHERE to_tsvector(content) @@ to_tsquery({searchString});", connection))
+                using (NpgsqlCommand command = new NpgsqlCommand($"SELECT * FROM {DbAccess.TableName} WHERE to_tsvector(content) @@ to_tsquery(\'{searchString}\');", connection))
                 {
                     using (NpgsqlDataReader reader = command.ExecuteReader())
                     {
