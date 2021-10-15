@@ -5,13 +5,55 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:SAE_Search_Tool_Client.Views.Views"
              mc:Ignorable="d"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"             
              xmlns:logic="clr-namespace:SAE_Search_Tool_Client.Views.Logic"
              DataContext="{x:Static logic:Datakernel.SearchResultsVM}"
              d:DesignHeight="450" 
              d:DesignWidth="800">
     <Grid>
 
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
         <!--Path-->
+        <ListView BorderBrush="Transparent"
+                  Grid.Row="0"
+                  Grid.Column="0"                  
+                  Foreground="DarkSlateGray"
+                  FontSize="14"
+                  SelectedItem="{Binding SelectedPath}"
+                  ItemsSource="{Binding FileReaderResults}"
+                  FontWeight="DemiBold">
+
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="SelectionChanged">
+                    <i:InvokeCommandAction Command="{Binding SelectedPathChangedCommand}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+
+            <ListView.View>
+
+                <GridView>
+                    <GridViewColumn 
+                        DisplayMemberBinding="{ Binding Path}"
+                        Header="Pfade"
+                        Width="auto"/>
+                </GridView>
+
+            </ListView.View>
+        </ListView>
+
+        <TextBox
+            Text="{Binding SelectedContent}"
+            IsReadOnly="True"
+            Grid.Column="1">
+
+        </TextBox>
+
+        <!--Content-->
+        <!--
         <ListView BorderBrush="Transparent"
                   Grid.Row="0"
                   Grid.Column="1"                  
@@ -24,13 +66,13 @@
 
                 <GridView>
                     <GridViewColumn 
-                        DisplayMemberBinding="{ Binding Path}"
-                        Header="Suchergebnisse"
+                        DisplayMemberBinding="{ Binding Content}"
+                        Header="Inhalt"
                         Width="auto"/>
                 </GridView>
 
             </ListView.View>
-        </ListView>
+        </ListView>-->
 
     </Grid>
 </UserControl>

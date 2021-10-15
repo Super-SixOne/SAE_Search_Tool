@@ -81,7 +81,7 @@
 
                         <DataTrigger 
                             Binding="{Binding SwitchView}" 
-                            Value="1">
+                            Value="0">
 
                             <Setter 
                                 Property="ContentTemplate" 
@@ -92,7 +92,7 @@
 
                         <DataTrigger 
                             Binding="{Binding SwitchView}" 
-                            Value="0">
+                            Value="1">
 
                             <Setter 
                                 Property="ContentTemplate" 

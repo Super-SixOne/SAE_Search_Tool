@@ -58,11 +58,14 @@ namespace SAE_Search_Tool_Client.Views
         {
             if (!string.IsNullOrEmpty(SearchWord))
             {
-                //List<Models.BusinessLogic.Models.FileReaderResult> res = DbAccess.GetResults(SearchWord).ToList();
-                Datakernel.SearchResultsVM.FileReaderResults = new ObservableCollection<Models.BusinessLogic.Models.FileReaderResult>(DbAccess.GetResults(SearchWord).ToList());
-
-                //Datakernel.SearchResultsVM.SearchResultPaths = new ObservableCollection<string>(DbAccess.GetResults(SearchWord).ToList().Select(p => p.Path));
-
+                try
+                {
+                    Datakernel.SearchResultsVM.FileReaderResults = new ObservableCollection<Models.BusinessLogic.Models.FileReaderResult>(DbAccess.GetResults(SearchWord));
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Keine Verbindung zur Datenbank");
+                }
             }
         }
 
